@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="security_web_app" />
+        <module name="web-security-project" />
+        <module name="webapptemplate" />
+        <module name="WebApp Template" />
+        <module name="FogGit" />
+        <module name="fog" />
+        <module name="Fog" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Fog" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
+      <module name="FogGit" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
+      <module name="WebApp Template" options="-endorseddirs &quot;$PROJECT_DIR$/../../../../../../emilelkjaernielsen/Documents/Git/Fog/target/endorsed&quot;" />
+      <module name="fog" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
+      <module name="security_web_app" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
+      <module name="web-security-project" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
+      <module name="webapptemplate" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
+    </option>
+  </component>
+</project>
