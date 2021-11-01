@@ -90,10 +90,9 @@ class IntergrationTest {
     db.runMigrations();
 
     DBUser dbUser = new DBUser(db);
-    JavaXEmailService javaXEmailService = new JavaXEmailService();
     GoogleAuthService tfa = new GoogleAuthService();
 
-    api = new Api(dbUser, javaXEmailService, tfa);
+    api = new Api(dbUser, tfa);
 
     // Create user
     try {

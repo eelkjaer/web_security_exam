@@ -37,7 +37,6 @@ public class BaseServlet extends HttpServlet {
 
     return new Api(
         new DBUser(database),
-        new JavaXEmailService(),
         new GoogleAuthService());
   }
 
