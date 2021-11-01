@@ -1,8 +1,6 @@
 <h1 align="center">Welcome to Web Security Exam 2021 👋</h1>
 
-### 🏠 [Team homepage](https://google.com/) todo
-
-### ✨ [Demo site](https://google.com) todo
+### ✨ [Demo site](https://virkeligsikker.dk)
 
 ## Author
 
