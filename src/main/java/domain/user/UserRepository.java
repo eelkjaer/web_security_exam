@@ -26,4 +26,6 @@ public interface UserRepository extends UserFactory {
   void changeUserRole(int userId, User.Role role) throws UserNotFound;
 
   void loggedIn(int userId) throws UserNotFound;
+
+  void saveTOTP(int userId, String totpSecret) throws UserNotFound;
 }

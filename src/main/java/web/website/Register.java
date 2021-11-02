@@ -67,7 +67,10 @@ public class Register extends BaseServlet {
       session.setAttribute("user", newUser);
       session.setAttribute("userrole", newUser.getRole().name());
 
+      response.sendRedirect(request.getContextPath() + "/UserPage");
+
     } catch (UserNotFound | RecaptchaException i) {
+      log.error(i.toString());
       request.setAttribute("errorMsg", i.getMessage());
       request.setAttribute("error", true);
       render(request, response);

@@ -10,40 +10,26 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
   version="4.0">
-  <display-name>HaxB00k</display-name>
+  <display-name>security_web_app</display-name>
 
   <security-constraint>
     <web-resource-collection>
-      <web-resource-name>HaxB00k</web-resource-name>
+      <web-resource-name>security_web_app</web-resource-name>
       <url-pattern>/*</url-pattern>
     </web-resource-collection>
     <user-data-constraint>
-<!--      <transport-guarantee>CONFIDENTIAL</transport-guarantee>-->
-                  <transport-guarantee>NONE</transport-guarantee>
+      <!-- <transport-guarantee>CONFIDENTIAL</transport-guarantee> -->
+      <transport-guarantee>NONE</transport-guarantee>
     </user-data-constraint>
 
   </security-constraint>
 
-  <jsp-config>
+  <!--<jsp-config>
     <jsp-property-group>
       <url-pattern>*.jsp</url-pattern>
       <page-encoding>UTF-8</page-encoding>
     </jsp-property-group>
-  </jsp-config>
-
-  <error-page>
-    <location>/WEB-INF/errorpages/error.jsp</location>
-  </error-page>
-
-  <error-page>
-    <error-code>404</error-code>
-    <location>/WEB-INF/errorpages/404.jsp</location>
-  </error-page>
-
-  <error-page>
-    <error-code>401</error-code>
-    <location>/WEB-INF/errorpages/401.jsp</location>
-  </error-page>
+  </jsp-config>-->
 
   <session-config>
     <session-timeout>

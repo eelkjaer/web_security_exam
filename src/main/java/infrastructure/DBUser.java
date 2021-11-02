@@ -92,7 +92,7 @@ public class DBUser implements UserRepository {
     try (Connection conn = database.getConnection()) {
 
       // Prepare a SQL statement from the DB connection
-      String query = "INSERT INTO users (name, email, role, password, totp) VALUES (?, ?, ?, ?, ?, ?)";
+      String query = "INSERT INTO users (name, email, role, password, totp) VALUES (?, ?, ?, ?, ?)";
       ResultSet rs;
       try (PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -197,6 +197,27 @@ public class DBUser implements UserRepository {
 
         // Link variables to the SQL statement
         ps.setInt(1, userId);
+
+        // Execute the SQL statement to update the DB
+        ps.executeUpdate();
+      }
+
+    } catch (SQLException ex) {
+      throw new UserNotFound();
+    }
+  }
+
+  @Override
+  public void saveTOTP(int userId, String totpSecret) throws UserNotFound {
+    try (Connection conn = database.getConnection()) {
+
+      // Deactivate and don't delete data
+      String query = "UPDATE users SET totp = ? WHERE id = ?";
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+
+        // Link variables to the SQL statement
+        ps.setString(1, totpSecret);
+        ps.setInt(2, userId);
 
         // Execute the SQL statement to update the DB
         ps.executeUpdate();

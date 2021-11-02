@@ -9,13 +9,11 @@ package api;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-import api.exceptions.EmailNotSent;
 import com.google.zxing.WriterException;
 import domain.user.User;
 import domain.user.UserRepository;
 import domain.user.exceptions.LoginError;
 import domain.user.exceptions.UserNotFound;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -139,5 +137,13 @@ public class Api {
       log.warn(e.getMessage());
     }
     return new ArrayList<>();
+  }
+
+  public void saveTotp(User curUser) {
+    try{
+      userRepository.saveTOTP(curUser.getId(), curUser.getTotp());
+    } catch (UserNotFound e){
+      log.warn(e.getMessage());
+    }
   }
 }

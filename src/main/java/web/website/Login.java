@@ -29,7 +29,6 @@ import web.BaseServlet;
 public class Login extends BaseServlet {
 
   private static final Logger log = getLogger(Login.class);
-  private static final int MAX_ATTEMPTS = Api.MAX_LOGIN_ATTEMPTS -1;
 
   protected void render(HttpServletRequest request, HttpServletResponse response) {
     try {
@@ -58,11 +57,14 @@ public class Login extends BaseServlet {
 
       if (curUser != null){
         if (curUser.isAdmin()) {
+          log.info("User {} is admin", curUser.getEmail());
           if(curUser.isTOTP()){
+            log.info("User {} is totp", curUser.getEmail());
             request.getSession().setAttribute("nuser", request.getSession().getAttribute("user"));
             request.getSession().removeAttribute("user");
             response.sendRedirect(request.getContextPath() + "/LoginTOTP");
           } else {
+            log.info("User {} is not totp", curUser.getEmail());
             response.sendRedirect(request.getContextPath() + "/AdminPage");
           }
         } else {
@@ -73,14 +75,8 @@ public class Login extends BaseServlet {
       }
 
     } catch (LoginError i) {
-      failedLoginAttempt(request.getSession());
-      int attempts = getLoginAttempts(request.getSession());
-      String errormsg;
-      if(attempts < MAX_ATTEMPTS){
-        errormsg = String.format("%s%nAttempts used: %d", i.getMessage(), attempts);
-      } else {
-        errormsg = i.getMessage();
-      }
+
+      String errormsg = i.getMessage();
 
       request.setAttribute("errorMsg", errormsg);
       request.setAttribute("error", true);
@@ -92,31 +88,6 @@ public class Login extends BaseServlet {
     }
   }
 
-  private int getLoginAttempts(HttpSession session){
-    String lapAttr = "loginAttempts";
-
-    var objInSess = session.getAttribute(lapAttr);
-
-    if(objInSess != null){
-      return Integer.parseInt(objInSess.toString());
-    } else {
-      session.setAttribute(lapAttr, 0);
-      return 0;
-    }
-  }
-
-  private void failedLoginAttempt(HttpSession session){
-    session.setAttribute("loginAttempts", getLoginAttempts(session)+1);
-  }
-
-  private boolean checkLoginAttempts(HttpSession session){
-    int attempts = getLoginAttempts(session);
-
-    log.warn("Login attempt no: %s", attempts);
-
-    return attempts <= MAX_ATTEMPTS;
-  }
-
   private User login(HttpServletRequest req) throws LoginError {
     HttpSession session = req.getSession();
 
@@ -124,20 +95,11 @@ public class Login extends BaseServlet {
     String usrPassword = req.getParameter("inputPassword");
     User curUsr;
 
-    if (checkLoginAttempts(session)) {
-      //TODO: Fix ASAP
-      //curUsr = api.login(usrEmail, User.calculateSecret(usrPassword));
-      //curUsr = new User(1, "Emil", usrEmail, Role.Admin, User.calculateSecret("123"), "FCBACWEHHLG5YHDX44AP3FYI4BBOPMWQ");
-      curUsr = new User(1, "Emil", usrEmail, Role.ADMIN, User.calculateSecret("123"), null);
+    curUsr = api.login(usrEmail, usrPassword);
 
-      log.debug("OTP: {}", curUsr.getTotp());
-
-      session.setAttribute("user", curUsr);
-      session.setAttribute("userrole", curUsr.getRole().name());
-      if(curUsr.isAdmin()) req.getSession().setMaxInactiveInterval(Api.MAX_ADMIN_SESSION_TIME * 60);
-    } else {
-      throw new LoginError("Too many login attempts");
-    }
+    session.setAttribute("user", curUsr);
+    session.setAttribute("userrole", curUsr.getRole().name());
+    if(curUsr.isAdmin()) req.getSession().setMaxInactiveInterval(Api.MAX_ADMIN_SESSION_TIME * 60);
 
     return curUsr;
   }

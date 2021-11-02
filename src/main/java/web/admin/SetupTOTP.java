@@ -46,7 +46,7 @@ public class SetupTOTP extends BaseServlet {
         log("User is not admin: " + curUser);
         resp.sendError(401);
       } else {
-        var totpSecret = api.generateTOTPSecret();
+        String totpSecret = api.generateTOTPSecret();
         curUser.setTotp(totpSecret);
         req.getSession().setAttribute("user", curUser);
 
@@ -73,6 +73,7 @@ public class SetupTOTP extends BaseServlet {
         log.debug("Secret: %s", curUser.getTotp());
         log.debug("Provided: %s", totpCode);
         req.getSession().setAttribute("user", curUser);
+        api.saveTotp(curUser);
         resp.sendRedirect(req.getContextPath() + "/AdminPage");
       } else {
         throw new LoginError("Wrong auth code");

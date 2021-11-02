@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import web.BaseServlet;
 
-@WebServlet("")
+@WebServlet(
+    name = "Index",
+    urlPatterns = {"", "/"})
 public class Index extends BaseServlet {
 
   private static final Logger log = getLogger(Index.class);

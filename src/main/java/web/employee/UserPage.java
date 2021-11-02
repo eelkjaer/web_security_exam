@@ -42,7 +42,7 @@ public class UserPage extends BaseServlet {
         req.setAttribute("currentUser", curUser);
 
         log("User is logged in: " + curUser);
-        render("UserPage", "/WEB-INF/pages/sales/user.jsp", req, resp);
+        render("UserPage", "/WEB-INF/pages/user/user.jsp", req, resp);
       }
 
     } catch (Exception e) {

@@ -82,12 +82,7 @@ class IntergrationTest {
   static void setupAPI() {
     resetTestDatabase();
 
-    String url = "jdbc:mysql://localhost:3306/fogtest?serverTimezone=CET";
-    String user = "fogtest";
-    String psw = "codergram";
-
-    Database db = new Database(url, user, psw);
-    db.runMigrations();
+    Database db = new Database();
 
     DBUser dbUser = new DBUser(db);
     GoogleAuthService tfa = new GoogleAuthService();

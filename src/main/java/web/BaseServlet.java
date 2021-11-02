@@ -52,9 +52,11 @@ public class BaseServlet extends HttpServlet {
     request.setAttribute("title", Api.GENERIC_SITE_TITLE + " - " + title);
     request.setAttribute("content", content);
     request.setAttribute("navbar", new Navbar(request));
-    request.setAttribute("domainname", Api.DOMAIN);
     request.setAttribute("recaptchaKey", Api.RECAPTCHA_SITEKEY);
 
+    System.out.println("Domain: " + api.DOMAIN);
+    log.info("Sitekey: {}", api.RECAPTCHA_SITEKEY);
+    log.info("Domain: {}", api.DOMAIN);
 
     request.getRequestDispatcher("/WEB-INF/includes/base.jsp").forward(request, response);
   }

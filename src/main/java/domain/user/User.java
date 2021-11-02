@@ -39,7 +39,7 @@ public class User implements Serializable {
   }
 
   public boolean isTOTP(){
-    return this.totp != null;
+    return !this.totp.isEmpty() || !this.totp.isBlank();
   }
 
   public static Enum<Role> valueOfIgnoreCase(String search) {
