@@ -7,6 +7,8 @@
 
 package infrastructure;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 import domain.user.User;
 import domain.user.UserRepository;
 import domain.user.exceptions.UserNotFound;
@@ -17,9 +19,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
 
 public class DBUser implements UserRepository {
   private final Database database;
+  private static final Logger log = getLogger(DBUser.class);
 
   public DBUser(Database database) {
     this.database = database;
@@ -260,6 +264,26 @@ public class DBUser implements UserRepository {
       }
     } catch (SQLException e) {
       throw new UserNotFound(e.getMessage());
+    }
+  }
+
+  @Override
+  public void saveToLog(int userId, String ip) {
+    try (Connection conn = database.getConnection()) {
+      // Prepare a SQL statement from the DB connection
+      String query = "INSERT INTO login_log (user_id, success, ip, timestamp) VALUES (?, ?, ?, NOW())";
+      try (PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+        // Link variables to the SQL statement
+        ps.setInt(1, userId);
+        ps.setBoolean(2, userId != -1);
+        ps.setString(3, ip);
+
+        // Execute the SQL statement to update the DB
+        ps.executeUpdate();
+      }
+    } catch (SQLException ex) {
+      log.error(ex.getMessage());
     }
   }
 }

@@ -146,4 +146,12 @@ public class Api {
       log.warn(e.getMessage());
     }
   }
+
+  public void saveToLog(User curUser, String ip_addr){
+    if(curUser == null){
+      userRepository.saveToLog(-1, ip_addr);
+    } else {
+      userRepository.saveToLog(curUser.getId(), ip_addr);
+    }
+  }
 }

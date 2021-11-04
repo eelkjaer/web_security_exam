@@ -28,4 +28,6 @@ public interface UserRepository extends UserFactory {
   void loggedIn(int userId) throws UserNotFound;
 
   void saveTOTP(int userId, String totpSecret) throws UserNotFound;
+
+  void saveToLog(int userId, String ip);
 }

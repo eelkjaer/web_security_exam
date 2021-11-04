@@ -47,14 +47,20 @@ public class Login extends BaseServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
+    String ip_addr = request.getHeader("X-FORWARDED-FOR").split(",")[0];
+
     try {
       if(api.verifyRecaptcha(request.getParameter("g-recaptcha-response"))){
         throw new RecaptchaException();
       }
+
       request.setAttribute("providedMail", request.getParameter("inputEmail"));
       User curUser = login(request);
 
+
       if (curUser != null){
+        api.saveToLog(curUser, ip_addr);
+
         if (curUser.isAdmin()) {
           log.info("User {} is admin", curUser.getEmail());
           if(curUser.isTOTP()){
@@ -74,6 +80,8 @@ public class Login extends BaseServlet {
       }
 
     } catch (LoginError i) {
+
+      api.saveToLog(null, ip_addr);
 
       String errormsg = i.getMessage();
 
