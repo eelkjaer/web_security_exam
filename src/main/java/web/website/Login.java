@@ -51,7 +51,6 @@ public class Login extends BaseServlet {
       if(api.verifyRecaptcha(request.getParameter("g-recaptcha-response"))){
         throw new RecaptchaException();
       }
-
       request.setAttribute("providedMail", request.getParameter("inputEmail"));
       User curUser = login(request);
 
@@ -93,7 +92,7 @@ public class Login extends BaseServlet {
 
     String usrEmail = req.getParameter("inputEmail");
     String usrPassword = req.getParameter("inputPassword");
-    User curUsr;
+    User curUsr = null;
 
     curUsr = api.login(usrEmail, usrPassword);
 

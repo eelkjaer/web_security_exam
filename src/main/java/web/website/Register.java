@@ -11,6 +11,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 import domain.user.User;
 import domain.user.User.Role;
+import domain.user.exceptions.LoginError;
 import domain.user.exceptions.UserNotFound;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -63,13 +64,17 @@ public class Register extends BaseServlet {
       String email = request.getParameter("inputEmail");
       String password = request.getParameter("inputPassword");
 
+      if (!User.validatePassword(password)){
+        throw new LoginError("Your password is not secure enough");
+      }
+
       User newUser = api.createUser(name, email, password, Role.USER);
       session.setAttribute("user", newUser);
       session.setAttribute("userrole", newUser.getRole().name());
 
       response.sendRedirect(request.getContextPath() + "/UserPage");
 
-    } catch (UserNotFound | RecaptchaException i) {
+    } catch (UserNotFound | RecaptchaException | LoginError i) {
       log.error(i.toString());
       request.setAttribute("errorMsg", i.getMessage());
       request.setAttribute("error", true);

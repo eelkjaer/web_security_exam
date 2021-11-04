@@ -60,7 +60,7 @@ public class User implements Serializable {
     return BCrypt.checkpw(password, this.password);
   }
 
-  public boolean validatePassword(String password){
+  public static boolean validatePassword(String password){
     boolean condition1 = false;
     boolean condition2 = false;
     boolean condition3 = false;
@@ -77,12 +77,12 @@ public class User implements Serializable {
     return condition1 && condition2 && condition3 && condition4;
   }
 
-  private boolean checkPassswordLenth(String password){
+  private static boolean checkPassswordLenth(String password){
 
     return password.length() >= 8 && password.length() <= 128;
   }
 
-  private boolean checkSequential(String password){
+  private static boolean checkSequential(String password){
     boolean isValid = false;
     if(password.length() > 1){
       isValid = true;
@@ -122,7 +122,7 @@ public class User implements Serializable {
     return isValid;
   }
 
-  private boolean checkTheFirstCharacterInPassword(String password){
+  private static boolean checkTheFirstCharacterInPassword(String password){
     boolean isValid = false;
     if(password.length() > 1) {
       isValid = true;
@@ -147,7 +147,7 @@ public class User implements Serializable {
     return isValid;
   }
 
-  private boolean checkPasswordComposition(String password){
+  private static boolean checkPasswordComposition(String password){
     boolean hasUppercaseLetter = false;
     boolean hasLowercaseLetter = false;
     boolean hasNumber = false;
