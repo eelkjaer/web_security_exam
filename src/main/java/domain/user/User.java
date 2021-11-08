@@ -9,6 +9,8 @@ package domain.user;
 
 import api.Api;
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class User implements Serializable {
@@ -58,6 +60,44 @@ public class User implements Serializable {
 
   public boolean isPasswordCorrect(String password) {
     return BCrypt.checkpw(password, this.password);
+  }
+
+  /**
+   * Requirements:
+   * Min 8 characters, max 20 characters.
+   * Min 1 digit
+   * Min 1 upper case letter
+   * Min 1 lower case alphabet
+   * Min 1 special character which includes !@#$%&*()-+=^.
+   * No whitespaces
+   * @param password Password to check
+   * @return true if requirements are met, otherwise false
+   */
+  public static boolean checkPasswordStrength(String password) {
+    if (password == null) return false;
+
+    String regex = "^(?=.*[0-9])"
+        + "(?=.*[a-z])(?=.*[A-Z])"
+        + "(?=.*[@#$%^&+=])"
+        + "(?=\\S+$).{8,20}$";
+
+    /*
+    RegEXplainer:
+
+    ^ represents starting character of the string.
+    (?=.*[0-9]) represents a digit must occur at least once.
+    (?=.*[a-z]) represents a lower case alphabet must occur at least once.
+    (?=.*[A-Z]) represents an upper case alphabet that must occur at least once.
+    (?=.*[@#$%^&-+=()] represents a special character that must occur at least once.
+    (?=\\S+$) white spaces don’t allowed in the entire string.
+    .{8, 20} represents at least 8 characters and at most 20 characters.
+    $ represents the end of the string.
+    */
+
+    Pattern p = Pattern.compile(regex);
+    Matcher m = p.matcher(password);
+
+    return m.matches();
   }
 
   public static boolean validatePassword(String password){

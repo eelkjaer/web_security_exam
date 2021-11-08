@@ -13,7 +13,7 @@
      style="background-color:#004687;color:#ffffff;width:100%;">
     <div class="container-fluid">
         <a class="navbar-brand" href="${pageContext.request.contextPath}">
-            <img src="${pageContext.request.contextPath}/images/logo-white.png" class="img-fluid" alt="Responsive image" style="width:30%;">
+            <img src="../images/logo-white.png" class="img-fluid" alt="Responsive image" style="width:30%;">
         </a>
         <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
             <span class="sr-only">Toggle navigation</span>
@@ -31,7 +31,7 @@
                 </c:forEach>
                 <c:if test="${sessionScope.user != null}">
                         <span class="navbar-text" style="color:white;">
-                            (<c:out value="${sessionScope.user.email}"></c:out>)
+                            (<c:out value="${sessionScope.user.name}"></c:out>)
                         </span>
                 </c:if>
             </ul>

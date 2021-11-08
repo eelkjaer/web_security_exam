@@ -17,6 +17,7 @@ import api.Api;
 import domain.user.User;
 import domain.user.User.Role;
 import domain.user.exceptions.LoginError;
+import domain.user.exceptions.UserException;
 import domain.user.exceptions.UserNotFound;
 import infrastructure.DBUser;
 import infrastructure.Database;
@@ -85,7 +86,7 @@ class IntergrationTest {
     // Create user
     try {
       api.createUser("test", "test@test.dk", "1234", Role.USER);
-    } catch (UserNotFound userNotFound) {
+    } catch (UserException userNotFound) {
       userNotFound.printStackTrace();
     }
   }

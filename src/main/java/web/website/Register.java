@@ -12,6 +12,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 import domain.user.User;
 import domain.user.User.Role;
 import domain.user.exceptions.LoginError;
+import domain.user.exceptions.UserException;
 import domain.user.exceptions.UserNotFound;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -74,7 +75,7 @@ public class Register extends BaseServlet {
 
       response.sendRedirect(request.getContextPath() + "/UserPage");
 
-    } catch (UserNotFound | RecaptchaException | LoginError i) {
+    } catch (RecaptchaException | LoginError | UserException i) {
       log.error(i.toString());
       request.setAttribute("errorMsg", i.getMessage());
       request.setAttribute("error", true);

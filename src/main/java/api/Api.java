@@ -13,6 +13,7 @@ import com.google.zxing.WriterException;
 import domain.user.User;
 import domain.user.UserRepository;
 import domain.user.exceptions.LoginError;
+import domain.user.exceptions.UserException;
 import domain.user.exceptions.UserNotFound;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public class Api {
    * @throws UserNotFound If user already exists in database
    */
   public User createUser(String name, String email, String password, User.Role role)
-      throws UserNotFound {
+      throws UserException {
     log.info("Trying to create user: \nUser Type: {}\nName: {}\nE-mail: {}\nPassword: {}", role, name, email, password);
 
     User user = new User(-1, name, email, role, User.calculateSecret(password), null);

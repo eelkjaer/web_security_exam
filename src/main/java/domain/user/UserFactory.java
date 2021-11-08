@@ -7,9 +7,9 @@
 
 package domain.user;
 
-import domain.user.exceptions.UserNotFound;
+import domain.user.exceptions.UserException;
 
 public interface UserFactory {
 
-  User createUser(User user) throws UserNotFound;
+  User createUser(User user) throws UserException;
 }

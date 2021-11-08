@@ -11,6 +11,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 import domain.user.User;
 import domain.user.UserRepository;
+import domain.user.exceptions.UserException;
 import domain.user.exceptions.UserNotFound;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -92,7 +93,7 @@ public class DBUser implements UserRepository {
   }
 
   @Override
-  public User createUser(User user) throws UserNotFound {
+  public User createUser(User user) throws UserException {
     try (Connection conn = database.getConnection()) {
 
       // Prepare a SQL statement from the DB connection
@@ -125,7 +126,7 @@ public class DBUser implements UserRepository {
         }
       }
     } catch (SQLException ex) {
-      throw new UserNotFound(ex.getMessage());
+      throw new UserException();
     }
   }
 
