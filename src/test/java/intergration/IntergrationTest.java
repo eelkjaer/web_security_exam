@@ -30,6 +30,7 @@ import java.sql.SQLException;
 import jdk.jfr.Description;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Tag;
@@ -41,6 +42,7 @@ import org.slf4j.Logger;
 @DisplayName("Integration test")
 @Description("Integration test of selected user stories")
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@Disabled
 class IntergrationTest {
 
   private static final Logger log = getLogger(IntergrationTest.class);
@@ -48,15 +50,6 @@ class IntergrationTest {
 
   static User user = null;
 
-  /**
-   * Before you run this integration test, create a user 'cupcaketest' and grant access to the
-   * database: You can use the following script:
-   * <pre>
-   * DROP USER IF EXISTS cupcaketest@localhost;
-   * CREATE USER cupcaketest@localhost;
-   * GRANT ALL PRIVILEGES ON cupcaketest.* TO cupcaketest@localhost;
-   * </pre>
-   */
   static void resetTestDatabase() {
     String URL =
         "jdbc:mysql://localhost/fogtest?serverTimezone=Europe/Copenhagen&allowPublicKeyRetrieval=true";
