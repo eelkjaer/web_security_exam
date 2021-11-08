@@ -31,7 +31,7 @@
                 </c:forEach>
                 <c:if test="${sessionScope.user != null}">
                         <span class="navbar-text" style="color:white;">
-                            (${sessionScope.user.email})
+                            (<c:out value="${sessionScope.user.email}"></c:out>)
                         </span>
                 </c:if>
             </ul>

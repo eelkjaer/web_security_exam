@@ -20,7 +20,7 @@
                     <h1 class="h3 mb-3 font-weight-normal">Opret bruger</h1>
 
                     <label for="inputName" class="sr-only">Navn</label>
-                    <input type="text" name="inputName" id="inputName" class="form-control" placeholder="Dit navn" required=true autofocus=true>
+                    <input type="text" name="inputName"  id="inputName" class="form-control" placeholder="Dit navn" required=true autofocus=true>
                     <br>
                     <label for="inputEmail" class="sr-only">Email adresse</label>
                     <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="E-mail adresse" required=true>

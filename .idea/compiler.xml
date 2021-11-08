@@ -11,6 +11,7 @@
         <module name="webapptemplate" />
         <module name="WebApp Template" />
         <module name="FogGit" />
+        <module name="web_security_exam" />
         <module name="fog" />
         <module name="Fog" />
       </profile>
@@ -24,6 +25,7 @@
       <module name="fog" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
       <module name="security_web_app" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
       <module name="web-security-project" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
+      <module name="web_security_exam" options="-endorseddirs &quot;$PROJECT_DIR$/target/endorsed&quot;" />
       <module name="webapptemplate" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
     </option>
   </component>
