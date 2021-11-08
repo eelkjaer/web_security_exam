@@ -1,8 +1,8 @@
-name: Github actions with maven build and deploy
+name: Deploy to Tomcatty
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   Do-the-travis-thing:
     runs-on: ubuntu-20.04 #or ubuntu-latest
