@@ -17,6 +17,7 @@
 
 
     <properties>
+        <remote.server>https://virkeligsikker.dk/textmanager</remote.server>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>16</maven.compiler.source>
@@ -181,9 +182,11 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://virkeligsikker.dk:8080/manager/text</url>
-                    <server>virkeligsikker</server>
-                    <path>/</path>
+                    <server>TomcatServer</server>
+                    <url>${remote.server}</url>
+                    <username>${remote.user}</username>
+                    <password>${remote.password}</password>
+                    <update>true</update>
                 </configuration>
             </plugin>
             <plugin>
