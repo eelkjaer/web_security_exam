@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dk.virkeligsikker</groupId>
-    <artifactId>security_web_app</artifactId>
+    <artifactId>ROOT</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
     <name>ROOT</name>
