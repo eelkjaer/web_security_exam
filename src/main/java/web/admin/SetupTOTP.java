@@ -70,8 +70,8 @@ public class SetupTOTP extends BaseServlet {
       String totpCode = req.getParameter("inputTOTP");
 
       if (api.checkTOTP(curUser.getTotp(), totpCode)) {
-        log.debug("Secret: %s", curUser.getTotp());
-        log.debug("Provided: %s", totpCode);
+        log.debug("Secret: {}", curUser.getTotp());
+        log.debug("Provided: {}", totpCode);
         req.getSession().setAttribute("user", curUser);
         api.saveTotp(curUser);
         resp.sendRedirect(req.getContextPath() + "/AdminPage");

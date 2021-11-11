@@ -51,8 +51,8 @@ public class LoginTOTP extends BaseServlet {
         String providedCode = request.getParameter("inputTOTP");
 
         if (api.checkTOTP(usr.getTotp(), providedCode)) {
-          log.debug("Secret: %s", usr.getTotp());
-          log.debug("Provided: %s", providedCode);
+          log.debug("Secret: {}", usr.getTotp());
+          log.debug("Provided: {}", providedCode);
           request.getSession().setAttribute("user", usr);
           request.getSession().removeAttribute("nuser");
           response.sendRedirect(request.getContextPath() + "/AdminPage");

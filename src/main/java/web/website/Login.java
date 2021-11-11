@@ -12,7 +12,6 @@ import static org.slf4j.LoggerFactory.getLogger;
 import api.Api;
 import api.exceptions.RecaptchaException;
 import domain.user.User;
-import domain.user.User.Role;
 import domain.user.exceptions.LoginError;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -47,7 +46,7 @@ public class Login extends BaseServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    String ip_addr = request.getHeader("X-FORWARDED-FOR").split(",")[0];
+    String ipAddr = request.getHeader("X-FORWARDED-FOR").split(",")[0];
 
     try {
       if(api.verifyRecaptcha(request.getParameter("g-recaptcha-response"))){
@@ -59,7 +58,7 @@ public class Login extends BaseServlet {
 
 
       if (curUser != null){
-        api.saveToLog(curUser, ip_addr);
+        api.saveToLog(curUser, ipAddr);
 
         if (curUser.isAdmin()) {
           log.info("User {} is admin", curUser.getEmail());
@@ -81,7 +80,7 @@ public class Login extends BaseServlet {
 
     } catch (LoginError i) {
 
-      api.saveToLog(null, ip_addr);
+      api.saveToLog(null, ipAddr);
 
       String errormsg = i.getMessage();
 

@@ -9,7 +9,6 @@ package api;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-import api.exceptions.RecaptchaException;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -44,7 +43,6 @@ public class Utils {
 
   protected static boolean verifyRecaptcha(String gRecaptchaResponse, String secret){
     String url = "https://www.google.com/recaptcha/api/siteverify";
-    String USER_AGENT = "Mozilla/5.0";
 
     if (gRecaptchaResponse == null || "".equals(gRecaptchaResponse)) {
       return false;
@@ -55,7 +53,7 @@ public class Utils {
       HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
       con.setRequestMethod("POST");
-      con.setRequestProperty("User-Agent", USER_AGENT);
+      con.setRequestProperty("User-Agent", "Mozilla/5.0");
       con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
       String postParams = "secret=" + secret + "&response="
@@ -67,9 +65,9 @@ public class Utils {
       wr.flush();
       wr.close();
 
-      log.debug("\nSending 'POST' request to URL : " + url);
-      log.debug("Post parameters : " + postParams);
-      log.debug("Response Code : " + con.getResponseCode());
+      log.debug("Sending 'POST' request to URL: {}", url);
+      log.debug("Post parameters: {}", postParams);
+      log.debug("Response Code: {}", con.getResponseCode());
 
       BufferedReader in = new BufferedReader(new InputStreamReader(
           con.getInputStream()));
@@ -82,12 +80,13 @@ public class Utils {
       in.close();
 
       // print result
-      log.debug(response.toString());
+      log.debug("Response: {}", response);
 
       //parse JSON response and return 'success' value
-      JsonReader jsonReader = Json.createReader(new StringReader(response.toString()));
-      JsonObject jsonObject = jsonReader.readObject();
-      jsonReader.close();
+      JsonObject jsonObject;
+      try (JsonReader jsonReader = Json.createReader(new StringReader(response.toString()))) {
+        jsonObject = jsonReader.readObject();
+      }
 
       return jsonObject.getBoolean("success");
     }catch(Exception e){

@@ -166,22 +166,19 @@ public class User implements Serializable {
     boolean isValid = false;
     if(password.length() > 1) {
       isValid = true;
-      char firstChar = password.charAt(0);
-      int asciivalue = firstChar;
-      System.out.println(firstChar);
-      System.out.println(asciivalue);
+      int asciiValue = password.charAt(0);
 
       // Check for big letters
-      if(asciivalue >= 65 && asciivalue <= 90){
-        isValid = false;
+      if(asciiValue >= 65 && asciiValue <= 90){
+        return false;
       }
       // Check for numbers
-      else if(asciivalue >= 48 && asciivalue <= 57){
-        isValid = false;
+      else if(asciiValue >= 48 && asciiValue <= 57){
+        return false;
       }
       // Check for special characters
-      else if((asciivalue >= 33 && asciivalue <= 47) || (asciivalue >= 58 && asciivalue <= 96) || (asciivalue >= 123 && asciivalue <= 126)){
-        isValid = false;
+      else if((asciiValue >= 33 && asciiValue <= 47) || (asciiValue >= 58 && asciiValue <= 96) || (asciiValue >= 123 && asciiValue <= 126)){
+        return false;
       }
     }
     return isValid;
@@ -195,22 +192,23 @@ public class User implements Serializable {
 
     for(int i = 1 ; i < password.length() ; i ++){
       char currentChar = password.charAt(i);
-      int asciivalue = currentChar;
 
       // Uppercase letter
-      if((asciivalue >= 65 && asciivalue <= 90) || (currentChar == 'Æ' || currentChar == 'Ø' || currentChar == 'Å')){
+      if(((int) currentChar >= 65 && (int) currentChar <= 90) || (currentChar == 'Æ' || currentChar == 'Ø' || currentChar == 'Å')){
         hasUppercaseLetter = true;
       }
       // Lowercase letter
-      else if((asciivalue >= 97 && asciivalue <= 122) || (currentChar == 'æ' || currentChar == 'ø' || currentChar == 'å')){
+      else if(((int) currentChar >= 97 && (int) currentChar <= 122) || (currentChar == 'æ' || currentChar == 'ø' || currentChar == 'å')){
         hasLowercaseLetter = true;
       }
       // Number
-      else if(asciivalue >= 48 && asciivalue <= 57){
+      else if((int) currentChar >= 48 && (int) currentChar <= 57){
         hasNumber = true;
       }
       // Special character
-      else if((asciivalue >= 33 && asciivalue <= 47) || (asciivalue >= 58 && asciivalue <= 96) || (asciivalue >= 123 && asciivalue <= 126)){
+      else if(((int) currentChar >= 33 && (int) currentChar <= 47) || (
+          (int) currentChar >= 58 && (int) currentChar <= 96) || (
+          (int) currentChar >= 123 && (int) currentChar <= 126)){
         hasSpecialCharacter = true;
       }
     }

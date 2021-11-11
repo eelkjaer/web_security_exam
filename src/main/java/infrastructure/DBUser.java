@@ -26,6 +26,11 @@ public class DBUser implements UserRepository {
   private final Database database;
   private static final Logger log = getLogger(DBUser.class);
 
+  private static final String USERS_ID = "users.id";
+  private static final String USERS_NAME = "users.name";
+  private static final String USERS_EMAIL = "users.email";
+  private static final String USERS_ROLE = "users.role";
+
   public DBUser(Database database) {
     this.database = database;
   }
@@ -44,10 +49,10 @@ public class DBUser implements UserRepository {
         rs = ps.executeQuery();
 
         while (rs.next()) {
-          int userId = rs.getInt("users.id");
-          String usersName = rs.getString("users.name");
-          String userEmail = rs.getString("users.email");
-          String userRole = rs.getString("users.role");
+          int userId = rs.getInt(USERS_ID);
+          String usersName = rs.getString(USERS_NAME);
+          String userEmail = rs.getString(USERS_EMAIL);
+          String userRole = rs.getString(USERS_ROLE);
 
           User user = new User(userId, usersName, userEmail, User.Role.valueOf(userRole));
 
@@ -75,9 +80,9 @@ public class DBUser implements UserRepository {
         rs = ps.executeQuery();
 
         if (rs.next()) {
-          String usersName = rs.getString("users.name");
-          String userEmail = rs.getString("users.email");
-          String userRole = rs.getString("users.role");
+          String usersName = rs.getString(USERS_NAME);
+          String userEmail = rs.getString(USERS_EMAIL);
+          String userRole = rs.getString(USERS_ROLE);
 
           user = new User(userId, usersName, userEmail, User.Role.valueOf(userRole));
 
@@ -250,10 +255,10 @@ public class DBUser implements UserRepository {
 
         // Search if there is a result from the DB execution
         if (rs.next()) {
-          int userId = rs.getInt("users.id");
-          String usersName = rs.getString("users.name");
-          String userMail = rs.getString("users.email");
-          User.Role userRole = User.Role.valueOf(rs.getString("users.role"));
+          int userId = rs.getInt(USERS_ID);
+          String usersName = rs.getString(USERS_NAME);
+          String userMail = rs.getString(USERS_EMAIL);
+          User.Role userRole = User.Role.valueOf(rs.getString(USERS_ROLE));
           String userPassword = rs.getString("users.password");
           String userTOTP = rs.getString("users.totp");
 

@@ -148,11 +148,11 @@ public class Api {
     }
   }
 
-  public void saveToLog(User curUser, String ip_addr){
+  public void saveToLog(User curUser, String ipAddr){
     if(curUser == null){
-      userRepository.saveToLog(-1, ip_addr);
+      userRepository.saveToLog(-1, ipAddr);
     } else {
-      userRepository.saveToLog(curUser.getId(), ip_addr);
+      userRepository.saveToLog(curUser.getId(), ipAddr);
     }
   }
 }

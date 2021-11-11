@@ -14,7 +14,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="${pageContext.request.contextPath}">
             <!-- <img src="../images/logo-white.png" class="img-fluid" alt="Responsive image" style="width:30%;"> -->
-            <img src="<c:url value='/images/logo-white.png'/>" class="img-fluid" alt="Responsive image" style="width:30%;">
+            <img src="https://i.ibb.co/9v3wdfF/logo-white.png" class="img-fluid" alt="Responsive image" style="width:30%;">
 
         </a>
         <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
