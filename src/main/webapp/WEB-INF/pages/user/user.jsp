@@ -14,4 +14,4 @@
 <br>
 <br>
 <br/> <br/>
-<h1>You are logged in as a user: ${sessionScope.user.email} as ${sessionScope.user.role.toString()}</h1>
+<h1>You are logged in as a user: <c:out value="${sessionScope.user.email}"></c:out> as <c:out value="${sessionScope.user.role.toString()}"></c:out></h1>

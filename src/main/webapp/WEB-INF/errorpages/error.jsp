@@ -40,10 +40,10 @@
 <body>
 <div class="container">
 
-    <h2 class="mt-4 mb-4 text-center">Fejl ${pageContext.response.status}</h2>
+    <h2 class="mt-4 mb-4 text-center">Fejl <c:out value="${pageContext.response.status}"></c:out></h2>
     <br>
     <br>
-    <h3><%=request.getAttribute("javax.servlet.error.message")%></h3>
+    <h3><c:out value="<%=request.getAttribute("javax.servlet.error.message")%>"></c:out></h3>
     <br/> <br/>
     <a href="${pageContext.request.contextPath}">Tilbage til start</a>
 

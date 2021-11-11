@@ -31,7 +31,25 @@ public class Navbar {
     List<Item> list = new ArrayList<>();
     User user = (User) request.getSession().getAttribute("user");
 
-    if (user != null) {
+
+    if(user != null){
+      if(user.isAdmin()){
+        for(Item x: items){
+          if(x.adminOnly && x.authorizedOnly) list.add(x);
+        }
+      } else {
+        for(Item x: items){
+          if(x.authorizedOnly) list.add(x);
+        }
+      }
+    } else {
+      for(Item x: items){
+        if(!x.authorizedOnly && !x.adminOnly) list.add(x);
+      }
+    }
+
+
+    /*if (user != null) {
       if (user.isAdmin()) {
         for (Item x : items) {
           if (x.authorizedOnly) {
@@ -51,7 +69,7 @@ public class Navbar {
           list.add(x);
         }
       }
-    }
+    }*/
     return list;
   }
 

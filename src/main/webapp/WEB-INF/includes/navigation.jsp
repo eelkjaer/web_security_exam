@@ -25,7 +25,7 @@
                     <li class="nav-item">
                         <a class="nav-link <c:if test="${i.active}">active</c:if>" style="color:#ffffff;" href="<c:url value="${i.url}"/>">
                             <i class="fa fa-${i.icon}"></i>
-                                ${i.name}
+                                <c:out value="${i.name}"></c:out>
                         </a>
                     </li>
                 </c:forEach>

@@ -43,7 +43,7 @@
                 <div>
                     <c:if test="${requestScope.error}">
                         <div class="alert alert-danger" role="alert">
-                                ${requestScope.errorMsg}
+                        <c:out value="${requestScope.errorMsg}"></c:out>
                         </div>
                     </c:if>
                 </div>
