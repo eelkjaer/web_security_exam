@@ -12,8 +12,6 @@
 <br>
 <br/> <br/>
 
-<br><br>
-
 <table id="example" name="example" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <th>Navn</th>

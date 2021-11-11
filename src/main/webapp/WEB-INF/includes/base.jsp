@@ -20,7 +20,8 @@
 
     <!-- Data tables -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/styles.css">
+    <!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/styles.css"> -->
+    <link rel="stylesheet" href="<c:url value='/styles/styles.css'/>">
 
     <script src="https://kit.fontawesome.com/3d84aad222.js" crossorigin="anonymous"></script>
 

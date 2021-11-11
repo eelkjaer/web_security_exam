@@ -13,7 +13,9 @@
      style="background-color:#004687;color:#ffffff;width:100%;">
     <div class="container-fluid">
         <a class="navbar-brand" href="${pageContext.request.contextPath}">
-            <img src="../images/logo-white.png" class="img-fluid" alt="Responsive image" style="width:30%;">
+            <!-- <img src="../images/logo-white.png" class="img-fluid" alt="Responsive image" style="width:30%;"> -->
+            <img src="<c:url value='/images/logo-white.png'/>" class="img-fluid" alt="Responsive image" style="width:30%;">
+
         </a>
         <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
             <span class="sr-only">Toggle navigation</span>

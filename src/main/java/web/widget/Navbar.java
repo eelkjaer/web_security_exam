@@ -35,11 +35,11 @@ public class Navbar {
     if(user != null){
       if(user.isAdmin()){
         for(Item x: items){
-          if(x.adminOnly && x.authorizedOnly) list.add(x);
+          if(x.adminOnly || x.authorizedOnly) list.add(x);
         }
       } else {
         for(Item x: items){
-          if(x.authorizedOnly) list.add(x);
+          if(x.authorizedOnly && !x.adminOnly) list.add(x);
         }
       }
     } else {
