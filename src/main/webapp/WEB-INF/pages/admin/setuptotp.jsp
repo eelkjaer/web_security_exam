@@ -14,7 +14,7 @@
 
 
 
-<img src="data:image/png;base64,${qrCode}"/>
+<img src="data:image/png;base64,${qrCode}" alt="QR Code for Google Authenticator"/>
 
 <form class="form-signin" action="SetupTOTP" method="POST" >
     <img class="mb-2" src="${pageContext.request.contextPath}/images/logo.png" alt="" width="72" >

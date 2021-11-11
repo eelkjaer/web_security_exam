@@ -9,8 +9,6 @@
   --%>
 
 <h2 class="mt-4 mb-4 text-center">Brugere</h2>
-<br>
-<br/> <br/>
 
 <table id="example" name="example" class="table table-striped table-bordered" style="width:100%">
     <thead>

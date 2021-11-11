@@ -12,8 +12,7 @@
 <nav class="navbar navbar-light navbar-expand-md navigation-clean-button"
      style="background-color:#004687;color:#ffffff;width:100%;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="${pageContext.request.contextPath}">
-            <!-- <img src="../images/logo-white.png" class="img-fluid" alt="Responsive image" style="width:30%;"> -->
+        <a class="navbar-brand" href="${pageContext.request.contextPath}" style="width:40%;">
             <img src="https://i.ibb.co/9v3wdfF/logo-white.png" class="img-fluid" alt="Responsive image" style="width:30%;">
 
         </a>
