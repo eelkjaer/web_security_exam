@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class UserTest {
 
-  private User testUser = new User(-1, "TestUser", "test@mail.dk", Role.USER);
+  private User testUser = new User(-1, "TestUser", "test@mail.dk", Role.USER, null);
 
   @Test
   public void testValidPasswordValidaton(){

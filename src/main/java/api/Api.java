@@ -84,7 +84,7 @@ public class Api {
       throws UserException {
     log.info("Trying to create user: \nUser Type: {}\nName: {}\nE-mail: {}\nPassword: {}", role, name, email, password);
 
-    User user = new User(-1, name, email, role, User.calculateSecret(password), null);
+    User user = new User(-1, name, email, role, null, User.calculateSecret(password), null);
     user = userRepository.createUser(user);
 
     log.info("User created with ID {}", user.getId());
