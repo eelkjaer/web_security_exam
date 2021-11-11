@@ -30,6 +30,7 @@ public class DBUser implements UserRepository {
   private static final String USERS_NAME = "users.name";
   private static final String USERS_EMAIL = "users.email";
   private static final String USERS_ROLE = "users.role";
+  private static final String USERS_LAST_LOGIN = "users.last_login";
 
   public DBUser(Database database) {
     this.database = database;
@@ -53,8 +54,9 @@ public class DBUser implements UserRepository {
           String usersName = rs.getString(USERS_NAME);
           String userEmail = rs.getString(USERS_EMAIL);
           String userRole = rs.getString(USERS_ROLE);
+          String lastLogin = String.valueOf(rs.getTimestamp(USERS_LAST_LOGIN));
 
-          User user = new User(userId, usersName, userEmail, User.Role.valueOf(userRole));
+          User user = new User(userId, usersName, userEmail, User.Role.valueOf(userRole), lastLogin);
 
           allUsersFromDB.add(user);
         }
@@ -83,8 +85,9 @@ public class DBUser implements UserRepository {
           String usersName = rs.getString(USERS_NAME);
           String userEmail = rs.getString(USERS_EMAIL);
           String userRole = rs.getString(USERS_ROLE);
+          String lastLogin = String.valueOf(rs.getTimestamp(USERS_LAST_LOGIN));
 
-          user = new User(userId, usersName, userEmail, User.Role.valueOf(userRole));
+          user = new User(userId, usersName, userEmail, User.Role.valueOf(userRole), lastLogin);
 
           return user;
         } else {
@@ -259,10 +262,11 @@ public class DBUser implements UserRepository {
           String usersName = rs.getString(USERS_NAME);
           String userMail = rs.getString(USERS_EMAIL);
           User.Role userRole = User.Role.valueOf(rs.getString(USERS_ROLE));
+          String lastLogin = String.valueOf(rs.getTimestamp(USERS_LAST_LOGIN));
           String userPassword = rs.getString("users.password");
           String userTOTP = rs.getString("users.totp");
 
-          return new User(userId, usersName, userMail, userRole, userPassword, userTOTP);
+          return new User(userId, usersName, userMail, userRole, lastLogin, userPassword, userTOTP);
 
         } else {
           throw new UserNotFound();

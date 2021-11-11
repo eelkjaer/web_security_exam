@@ -15,6 +15,7 @@
         <th>Navn</th>
         <th>E-mail</th>
         <th>Role</th>
+        <th>Last login</th>
         <th class="no-sort"> </th>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
             <td><c:out value="${user.name}"></c:out></td>
             <td><c:out value="${user.email}"></c:out></td>
             <td><c:out value="${user.role.name()}"></c:out></td>
+            <td><c:out value="${user.lastLoginDate}"></c:out></td>
             <td>
                 <form action="AdminPage" method="post">
                     <input type="hidden" name="action" value="deleteUser"/>

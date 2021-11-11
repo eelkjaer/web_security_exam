@@ -21,23 +21,26 @@ public class User implements Serializable {
   private final String password;
   private String totp;
   private int id;
+  private final String lastLogin;
 
-  public User(int id, String name, String email, Enum<Role> role, String password, String totp) {
+  public User(int id, String name, String email, Enum<Role> role, String lastLogin, String password, String totp) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.role = role;
     this.password = password;
     this.totp = totp;
+    this.lastLogin = lastLogin;
   }
 
-  public User(int id, String name, String email, Enum<Role> role) {
+  public User(int id, String name, String email, Enum<Role> role, String lastLogin) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.role = role;
     password = null;
     totp = null;
+    this.lastLogin = lastLogin;
   }
 
   public boolean isTOTP(){
@@ -255,6 +258,14 @@ public class User implements Serializable {
 
   public void setTotp(String totp) {
     this.totp = totp;
+  }
+
+  public String getLastLogin() {
+    return lastLogin;
+  }
+
+  public String getLastLoginDate(){
+    return this.lastLogin != null ? this.lastLogin : "Never";
   }
 
   @Override
