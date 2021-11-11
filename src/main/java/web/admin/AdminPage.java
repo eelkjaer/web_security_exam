@@ -65,12 +65,6 @@ public class AdminPage extends BaseServlet {
       String action = req.getParameter("action");
       if ("deleteUser".equals(action)) {
         deleteUser(req);
-      } else if ("createUser".equals(action)) {
-        String name = req.getParameter("inputName");
-        String mail = req.getParameter("inputEmail");
-        String password = req.getParameter("inputPsw");
-        Role role = Role.valueOf(req.getParameter("inputRole"));
-        api.createUser(name, mail, password, role);
       }
       redirect(req, resp, this.getServletName());
     } catch (Exception e) {

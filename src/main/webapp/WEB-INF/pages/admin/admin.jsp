@@ -24,7 +24,7 @@
             <td><c:out value="${user.email}"></c:out></td>
             <td><c:out value="${user.role.name()}"></c:out></td>
             <td>
-                <form action="Users" method="post">
+                <form action="AdminPage" method="post">
                     <input type="hidden" name="action" value="deleteUser"/>
                     <input type="hidden" name="userid" value="${user.id}"/>
                     <input type="submit" class="btn btn-danger" value="Slet bruger" onclick="return confirm('Er du sikker?')" <c:if test="${sessionScope.user.id == user.id || user.admin}">disabled</c:if>/>
