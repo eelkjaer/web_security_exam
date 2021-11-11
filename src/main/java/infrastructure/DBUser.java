@@ -41,7 +41,7 @@ public class DBUser implements UserRepository {
 
     try (Connection conn = database.getConnection()) {
 
-      String query = "SELECT * FROM users";
+      String query = "SELECT * FROM users WHERE active = 1";
 
       ResultSet rs;
       try (PreparedStatement ps = conn.prepareStatement(query)) {
@@ -243,7 +243,7 @@ public class DBUser implements UserRepository {
     try (Connection conn = database.getConnection()) {
 
       // Prepare a SQL statement from the DB connection
-      String query = "SELECT * FROM users WHERE email = ?";
+      String query = "SELECT * FROM users WHERE email = ? AND active = 1";
       ResultSet rs;
       try (PreparedStatement ps = conn.prepareStatement(query)) {
 
