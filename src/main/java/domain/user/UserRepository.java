@@ -9,6 +9,7 @@ package domain.user;
 
 import domain.user.exceptions.LoginError;
 import domain.user.exceptions.UserNotFound;
+import domain.user.exceptions.UserSecurityException;
 import java.util.List;
 
 public interface UserRepository extends UserFactory {
@@ -17,7 +18,7 @@ public interface UserRepository extends UserFactory {
 
   User getUserById(int userId) throws UserNotFound;
 
-  User getUserByEmail(String email) throws UserNotFound;
+  User getUserByEmail(String email) throws UserNotFound, UserSecurityException;
 
   void updateUserById(int userId, User user) throws UserNotFound;
 

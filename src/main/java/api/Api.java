@@ -15,6 +15,7 @@ import domain.user.UserRepository;
 import domain.user.exceptions.LoginError;
 import domain.user.exceptions.UserException;
 import domain.user.exceptions.UserNotFound;
+import domain.user.exceptions.UserSecurityException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +116,8 @@ public class Api {
       log.debug("User trying to login: {}", user);
     } catch (UserNotFound userNotFound) {
       log.warn(userNotFound.getMessage());
+    } catch (UserSecurityException e) {
+      throw new LoginError(e.getMessage());
     }
     if (user == null || !user.isPasswordCorrect(password)) {
       throw new LoginError();

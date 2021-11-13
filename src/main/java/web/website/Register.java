@@ -65,17 +65,19 @@ public class Register extends BaseServlet {
       String email = request.getParameter("inputEmail");
       String password = request.getParameter("inputPassword");
 
-      /*
+
       // NIST compliant but not user-friendly or makes any sense at all.
       if(!User.validatePassword(password)){
-        throw new LoginError("Your password is not secure enough");
+        throw new LoginError("Your password is not secure enough. ");
       }
-       */
 
 
+      /*
+      // Our own password strength
       if (!User.checkPasswordStrength(password)){
         throw new LoginError("Your password is not secure enough");
       }
+      */
 
       User newUser = api.createUser(name, email, password, Role.USER);
       session.setAttribute("user", newUser);

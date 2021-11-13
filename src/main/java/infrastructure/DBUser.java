@@ -13,6 +13,7 @@ import domain.user.User;
 import domain.user.UserRepository;
 import domain.user.exceptions.UserException;
 import domain.user.exceptions.UserNotFound;
+import domain.user.exceptions.UserSecurityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -242,11 +243,11 @@ public class DBUser implements UserRepository {
   }
 
   @Override
-  public User getUserByEmail(String email) throws UserNotFound {
+  public User getUserByEmail(String email) throws UserNotFound, UserSecurityException {
     try (Connection conn = database.getConnection()) {
 
       // Prepare a SQL statement from the DB connection
-      String query = "SELECT * FROM users WHERE email = ? AND active = 1";
+      String query = "SELECT * FROM users WHERE email = ?";
       ResultSet rs;
       try (PreparedStatement ps = conn.prepareStatement(query)) {
 
@@ -266,6 +267,8 @@ public class DBUser implements UserRepository {
           String userPassword = rs.getString("users.password");
           String userTOTP = rs.getString("users.totp");
 
+          if(rs.getInt("users.active") == 0) throw new UserSecurityException();
+
           return new User(userId, usersName, userMail, userRole, lastLogin, userPassword, userTOTP);
 
         } else {
@@ -273,7 +276,7 @@ public class DBUser implements UserRepository {
         }
       }
     } catch (SQLException e) {
-      throw new UserNotFound(e.getMessage());
+      throw new UserNotFound();
     }
   }
 
