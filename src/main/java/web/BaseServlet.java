@@ -61,7 +61,7 @@ public class BaseServlet extends HttpServlet {
 
     String ipAddr = request.getHeader("X-FORWARDED-FOR").split(",")[0];
     log.info("{} requesting {} ({})", ipAddr, title, content);
-    log.info("HTTP headers: {}", getAllHeaders(request));
+    //log.info("HTTP headers: {}", getAllHeaders(request));
 
     request.getRequestDispatcher("/WEB-INF/includes/base.jsp").forward(request, response);
   }
