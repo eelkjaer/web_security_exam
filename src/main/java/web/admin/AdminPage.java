@@ -35,8 +35,13 @@ public class AdminPage extends BaseServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
     try {
+      if (req.getSession().getAttribute("user") == null){
+        redirect(req, resp, "Login");
+      }
+
       User curUser = (User) req.getSession().getAttribute("user");
 
+      //TODO: Fix
       if(!curUser.isTOTP()) resp.sendRedirect(req.getContextPath() + "/SetupTOTP");
 
       req.setAttribute("qrCode", api.getQRCode(curUser));

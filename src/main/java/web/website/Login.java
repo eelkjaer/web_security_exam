@@ -39,6 +39,9 @@ public class Login extends BaseServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    if (req.getSession().getAttribute("user") != null){
+      redirect(req, resp, "UserPage");
+    }
     render(req, resp);
 
   }
@@ -104,7 +107,6 @@ public class Login extends BaseServlet {
     curUsr = api.login(usrEmail, usrPassword);
 
     session.setAttribute("user", curUsr);
-    session.setAttribute("userrole", curUsr.getRole().name());
     if(curUsr.isAdmin()) req.getSession().setMaxInactiveInterval(Api.MAX_ADMIN_SESSION_TIME * 60);
 
     return curUsr;

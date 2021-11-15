@@ -64,6 +64,9 @@ public class SetupTOTP extends BaseServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp){
     try {
+      if (req.getSession().getAttribute("user") == null){
+        redirect(req, resp, "Login");
+      }
 
       User curUser = (User) req.getSession().getAttribute("user");
 

@@ -15,12 +15,12 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class User implements Serializable {
 
+  private int id;
   private final String name;
   private final String email;
   private final Enum<Role> role;
   private final String password;
   private String totp;
-  private int id;
   private final String lastLogin;
 
   public User(int id, String name, String email, Enum<Role> role, String lastLogin, String password, String totp) {
@@ -44,18 +44,8 @@ public class User implements Serializable {
   }
 
   public boolean isTOTP(){
-    return !this.totp.isEmpty() || !this.totp.isBlank();
+    return !this.totp.isEmpty() || !this.totp.isBlank() || this.totp != null;
   }
-
-  public static Enum<Role> valueOfIgnoreCase(String search) {
-    for (Enum<Role> e : Role.values()) {
-      if (e.name().equalsIgnoreCase(search)) {
-        return e;
-      }
-    }
-    return null;
-  }
-
 
   public static String calculateSecret(String password) {
     return BCrypt.hashpw(password, BCrypt.gensalt() + Api.PASSWORD_PEPPER);
@@ -271,12 +261,13 @@ public class User implements Serializable {
   @Override
   public String toString() {
     return "User{" +
-        "name='" + name + '\'' +
+        "id=" + id +
+        ", name='" + name + '\'' +
         ", email='" + email + '\'' +
         ", role=" + role +
-        ", password=" + password +
-        ", totp=" + totp +
-        ", id=" + id +
+        ", password='" + password + '\'' +
+        ", totp='" + totp + '\'' +
+        ", lastLogin='" + lastLogin + '\'' +
         '}';
   }
 

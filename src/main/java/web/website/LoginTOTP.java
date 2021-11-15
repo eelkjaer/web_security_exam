@@ -36,6 +36,9 @@ public class LoginTOTP extends BaseServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+    if (req.getSession().getAttribute("user") != null){
+      redirect(req, resp, "UserPage");
+    }
     render(req, resp);
 
   }

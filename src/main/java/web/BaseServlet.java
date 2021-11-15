@@ -65,8 +65,6 @@ public class BaseServlet extends HttpServlet {
     response.addHeader("X-Frame-Options", "deny");
     response.addHeader("X-XSS-Protection", "1");
     response.addHeader("X-Content-Type-Options", "nosniff");
-
-
   }
 
   protected void redirect(HttpServletRequest req, HttpServletResponse resp, String servletName) {

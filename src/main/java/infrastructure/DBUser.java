@@ -104,33 +104,23 @@ public class DBUser implements UserRepository {
   @Override
   public User createUser(User user) throws UserException {
     try (Connection conn = database.getConnection()) {
-
-      // Prepare a SQL statement from the DB connection
       String query = "INSERT INTO users (name, email, role, password, totp) VALUES (?, ?, ?, ?, ?)";
       ResultSet rs;
       try (PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-        // Link variables to the SQL statement
         ps.setString(1, user.getName());
         ps.setString(2, user.getEmail());
         ps.setString(3, user.getRole().name());
         ps.setString(4, user.getPassword());
         ps.setString(5, "");
-
-        // Execute the SQL statement to update the DB
         ps.executeUpdate();
 
-        // Optional: Get result from the SQL execution, that returns the executed keys (user_id,
-        // user_name etc..)
         rs = ps.getGeneratedKeys();
 
-        // Search if there is a result from the DB execution
         if (rs.next()) {
-          // Create user from the user_id key that is returned form the DB execution
           return user.withId(rs.getInt(1));
 
         } else {
-          // Return null, if no result is returned form the execution
           return null;
         }
       }
@@ -142,16 +132,10 @@ public class DBUser implements UserRepository {
   @Override
   public void updateUserById(int userId, User user) throws UserNotFound {
     try (Connection conn = database.getConnection()) {
-
-      // Prepare a SQL statement from the DB connection
       String query = "UPDATE users SET role = ?" + " WHERE id = ? ";
       try (PreparedStatement ps = conn.prepareStatement(query)) {
-
-        // Link variables to the SQL statement
         ps.setString(1, user.getRole().name());
         ps.setInt(2, userId);
-
-        // Execute the SQL statement to update the DB
         ps.executeUpdate();
       }
 
@@ -163,15 +147,9 @@ public class DBUser implements UserRepository {
   @Override
   public void deleteUserById(int userId) throws UserNotFound {
     try (Connection conn = database.getConnection()) {
-
-      // Deactivate and don't delete data
       String query = "UPDATE users SET active = 0 WHERE id = ?";
       try (PreparedStatement ps = conn.prepareStatement(query)) {
-
-        // Link variables to the SQL statement
         ps.setInt(1, userId);
-
-        // Execute the SQL statement to update the DB
         ps.executeUpdate();
       }
 
@@ -183,16 +161,10 @@ public class DBUser implements UserRepository {
   @Override
   public void changeUserRole(int userId, User.Role role) throws UserNotFound {
     try (Connection conn = database.getConnection()) {
-
-      // Prepare a SQL statement from the DB connection
       String query = "UPDATE users SET role = ? " + " WHERE id = ? ";
       try (PreparedStatement ps = conn.prepareStatement(query)) {
-
-        // Link variables to the SQL statement
         ps.setString(1, role.name());
         ps.setInt(2, userId);
-
-        // Execute the SQL statement to update the DB
         ps.executeUpdate();
       }
 
@@ -204,15 +176,9 @@ public class DBUser implements UserRepository {
   @Override
   public void loggedIn(int userId) throws UserNotFound{
     try (Connection conn = database.getConnection()) {
-
-      // Deactivate and don't delete data
       String query = "UPDATE users SET last_login = NOW() WHERE id = ?";
       try (PreparedStatement ps = conn.prepareStatement(query)) {
-
-        // Link variables to the SQL statement
         ps.setInt(1, userId);
-
-        // Execute the SQL statement to update the DB
         ps.executeUpdate();
       }
 
@@ -224,16 +190,10 @@ public class DBUser implements UserRepository {
   @Override
   public void saveTOTP(int userId, String totpSecret) throws UserNotFound {
     try (Connection conn = database.getConnection()) {
-
-      // Deactivate and don't delete data
       String query = "UPDATE users SET totp = ? WHERE id = ?";
       try (PreparedStatement ps = conn.prepareStatement(query)) {
-
-        // Link variables to the SQL statement
         ps.setString(1, totpSecret);
         ps.setInt(2, userId);
-
-        // Execute the SQL statement to update the DB
         ps.executeUpdate();
       }
 
@@ -245,19 +205,12 @@ public class DBUser implements UserRepository {
   @Override
   public User getUserByEmail(String email) throws UserNotFound, UserSecurityException {
     try (Connection conn = database.getConnection()) {
-
-      // Prepare a SQL statement from the DB connection
       String query = "SELECT * FROM users WHERE email = ?";
       ResultSet rs;
       try (PreparedStatement ps = conn.prepareStatement(query)) {
-
-        // Link variables to the SQL statement
         ps.setString(1, email);
-
-        // Execute the SQL query and save the result
         rs = ps.executeQuery();
 
-        // Search if there is a result from the DB execution
         if (rs.next()) {
           int userId = rs.getInt(USERS_ID);
           String usersName = rs.getString(USERS_NAME);
@@ -283,16 +236,12 @@ public class DBUser implements UserRepository {
   @Override
   public void saveToLog(int userId, String ip) {
     try (Connection conn = database.getConnection()) {
-      // Prepare a SQL statement from the DB connection
       String query = "INSERT INTO login_log (user_id, success, ip, timestamp) VALUES (?, ?, ?, NOW())";
       try (PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-
-        // Link variables to the SQL statement
         ps.setInt(1, userId);
         ps.setBoolean(2, userId != -1);
         ps.setString(3, ip);
 
-        // Execute the SQL statement to update the DB
         ps.executeUpdate();
       }
     } catch (SQLException ex) {

@@ -21,11 +21,6 @@ import web.BaseServlet;
     urlPatterns = {"/UserPage"})
 public class UserPage extends BaseServlet {
 
-  /**
-   * Renders the index.jsp page
-   *
-   * @see BaseServlet
-   */
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {

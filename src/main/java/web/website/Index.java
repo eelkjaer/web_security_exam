@@ -27,6 +27,9 @@ public class Index extends BaseServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+    if (req.getSession().getAttribute("user") != null){
+      redirect(req, resp, "UserPage");
+    }
 
     log.info("Serving page {}", req.getRequestURI());
 

@@ -20,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.WebApplicationException;
 import org.slf4j.Logger;
 import web.BaseServlet;
 import api.exceptions.RecaptchaException;
@@ -41,8 +42,11 @@ public class Register extends BaseServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-    render(req, resp);
+    if (req.getSession().getAttribute("user") != null){
+      redirect(req, resp, "UserPage");
+    }
 
+    render(req, resp);
   }
 
   @Override
@@ -60,17 +64,14 @@ public class Register extends BaseServlet {
         throw new RecaptchaException();
       }
 
-
       String name = request.getParameter("inputName");
       String email = request.getParameter("inputEmail");
       String password = request.getParameter("inputPassword");
-
 
       // NIST compliant but not user-friendly or makes any sense at all.
       if(!User.validatePassword(password)){
         throw new LoginError("Your password is not secure enough. ");
       }
-
 
       /*
       // Our own password strength
@@ -81,7 +82,6 @@ public class Register extends BaseServlet {
 
       User newUser = api.createUser(name, email, password, Role.USER);
       session.setAttribute("user", newUser);
-      session.setAttribute("userrole", newUser.getRole().name());
 
       response.sendRedirect(request.getContextPath() + "/UserPage");
 
