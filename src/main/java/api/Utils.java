@@ -36,12 +36,12 @@ public class Utils {
       if (input == null) return null;
       return IOUtils.toString(input);
     } catch (IOException ex) {
-      ex.printStackTrace();
+      log.error(ex.getMessage());
     }
     return null;
   }
 
-  protected static boolean verifyRecaptcha(String gRecaptchaResponse, String secret){
+  protected static boolean verifyRecaptcha(String gRecaptchaResponse){
     String url = "https://www.google.com/recaptcha/api/siteverify";
 
     if (gRecaptchaResponse == null || "".equals(gRecaptchaResponse)) {
@@ -56,7 +56,7 @@ public class Utils {
       con.setRequestProperty("User-Agent", "Mozilla/5.0");
       con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-      String postParams = "secret=" + secret + "&response="
+      String postParams = "secret=" + Api.RECAPTCHA_SECRET + "&response="
           + gRecaptchaResponse;
 
       con.setDoOutput(true);
@@ -90,7 +90,7 @@ public class Utils {
 
       return jsonObject.getBoolean("success");
     }catch(Exception e){
-      e.printStackTrace();
+      log.error(e.getMessage());
       return false;
     }
 

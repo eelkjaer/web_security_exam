@@ -14,6 +14,11 @@ import infrastructure.DBUser;
 import infrastructure.Database;
 import infrastructure.GoogleAuthService;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -54,9 +59,9 @@ public class BaseServlet extends HttpServlet {
     request.setAttribute("navbar", new Navbar(request));
     request.setAttribute("recaptchaKey", Api.RECAPTCHA_SITEKEY);
 
-    log.info("Site domain: {}", Api.DOMAIN);
-    log.info("Sitekey: {}", Api.RECAPTCHA_SITEKEY);
-    log.info("Domain: {}", Api.DOMAIN);
+    String ipAddr = request.getHeader("X-FORWARDED-FOR").split(",")[0];
+    log.info("{} requesting {} ({})", ipAddr, title, content);
+    log.info("HTTP headers: {}", getAllHeaders(request));
 
     request.getRequestDispatcher("/WEB-INF/includes/base.jsp").forward(request, response);
   }
@@ -73,7 +78,16 @@ public class BaseServlet extends HttpServlet {
       resp.setCharacterEncoding(ENCODING);
       resp.sendRedirect(req.getContextPath() + "/" + servletName);
     } catch (IOException ee) {
-      log.info(ee.getMessage());
+      log.error(ee.getMessage());
     }
+  }
+
+  private Map<String, List<String>> getAllHeaders(HttpServletRequest request){
+    return Collections.list(request.getHeaderNames())
+        .stream()
+        .collect(Collectors.toMap(
+            Function.identity(),
+            h -> Collections.list(request.getHeaders(h))
+        ));
   }
 }

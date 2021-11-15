@@ -13,14 +13,12 @@ import domain.user.User;
 import domain.user.User.Role;
 import domain.user.exceptions.LoginError;
 import domain.user.exceptions.UserException;
-import domain.user.exceptions.UserNotFound;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.WebApplicationException;
 import org.slf4j.Logger;
 import web.BaseServlet;
 import api.exceptions.RecaptchaException;
@@ -44,6 +42,7 @@ public class Register extends BaseServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
     if (req.getSession().getAttribute("user") != null){
       redirect(req, resp, "UserPage");
+      return;
     }
 
     render(req, resp);

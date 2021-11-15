@@ -40,7 +40,9 @@ public class Login extends BaseServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
     if (req.getSession().getAttribute("user") != null){
+      log.info("User already logged in");
       redirect(req, resp, "UserPage");
+      return;
     }
     render(req, resp);
 
@@ -82,15 +84,14 @@ public class Login extends BaseServlet {
       }
 
     } catch (LoginError i) {
-
+      log.error(i.getMessage());
       api.saveToLog(null, ipAddr);
-
       String errormsg = i.getMessage();
-
       request.setAttribute("errorMsg", errormsg);
       request.setAttribute("error", true);
       render(request, response);
     } catch (RecaptchaException e) {
+      log.error("Recaptcha exception: {}", e.getMessage());
       request.setAttribute("errorMsg", e.getMessage());
       request.setAttribute("error", true);
       render(request, response);

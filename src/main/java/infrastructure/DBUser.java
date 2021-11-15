@@ -63,6 +63,7 @@ public class DBUser implements UserRepository {
         }
       }
     } catch (SQLException ex) {
+      log.error(ex.getMessage());
       throw new UserNotFound();
     }
 
@@ -97,7 +98,8 @@ public class DBUser implements UserRepository {
       }
 
     } catch (SQLException ex) {
-      throw new UserNotFound(ex.getMessage());
+      log.error(ex.getMessage());
+      throw new UserNotFound();
     }
   }
 
@@ -125,6 +127,7 @@ public class DBUser implements UserRepository {
         }
       }
     } catch (SQLException ex) {
+      log.error(ex.getMessage());
       throw new UserException();
     }
   }
@@ -140,6 +143,7 @@ public class DBUser implements UserRepository {
       }
 
     } catch (SQLException ex) {
+      log.error(ex.getMessage());
       throw new UserNotFound();
     }
   }
@@ -154,6 +158,7 @@ public class DBUser implements UserRepository {
       }
 
     } catch (SQLException ex) {
+      log.error(ex.getMessage());
       throw new UserNotFound();
     }
   }
@@ -169,6 +174,7 @@ public class DBUser implements UserRepository {
       }
 
     } catch (SQLException ex) {
+      log.error(ex.getMessage());
       throw new UserNotFound();
     }
   }
@@ -183,6 +189,7 @@ public class DBUser implements UserRepository {
       }
 
     } catch (SQLException ex) {
+      log.error(ex.getMessage());
       throw new UserNotFound();
     }
   }
@@ -198,6 +205,7 @@ public class DBUser implements UserRepository {
       }
 
     } catch (SQLException ex) {
+      log.error(ex.getMessage());
       throw new UserNotFound();
     }
   }
@@ -229,6 +237,7 @@ public class DBUser implements UserRepository {
         }
       }
     } catch (SQLException e) {
+      log.error(e.getMessage());
       throw new UserNotFound();
     }
   }

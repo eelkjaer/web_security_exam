@@ -11,7 +11,6 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 import api.Api;
 import domain.user.User;
-import domain.user.User.Role;
 import domain.user.exceptions.UserNotFound;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
@@ -24,43 +23,42 @@ import web.BaseServlet;
     name = "AdminPage",
     urlPatterns = {"/AdminPage"})
 public class AdminPage extends BaseServlet {
-
   private static final Logger log = getLogger(AdminPage.class);
 
-  /**
-   * Renders the index.jsp page
-   *
-   * @see BaseServlet
-   */
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
     try {
       if (req.getSession().getAttribute("user") == null){
+        log.warn("No user in session");
         redirect(req, resp, "Login");
+        return;
       }
 
       User curUser = (User) req.getSession().getAttribute("user");
 
-      //TODO: Fix
-      if(!curUser.isTOTP()) resp.sendRedirect(req.getContextPath() + "/SetupTOTP");
+      if(!curUser.isTOTP()) {
+        log.info("Admin user dont have TOTP setup: {}", curUser.getId());
+        resp.sendRedirect(req.getContextPath() + "/SetupTOTP");
+        return;
+      }
 
       req.setAttribute("qrCode", api.getQRCode(curUser));
 
-      log("Trying to log into admin :" + curUser);
+      log.info("Trying to log into admin : {}", curUser.getId());
 
       if (!curUser.isAdmin()) {
-        log("User is not admin: " + curUser);
+        log.info("User is not admin: {}", curUser.getId());
         resp.sendError(401);
       } else {
         req.getSession().setMaxInactiveInterval(Api.MAX_ADMIN_SESSION_TIME * 60);
         List<User> users = List.copyOf(api.getUsers());
         req.setAttribute("userlist", users);
-        log("User is admin: " + curUser);
+        log.info("User {} is admin", curUser.getId());
         render("Users", "/WEB-INF/pages/admin/admin.jsp", req, resp);
       }
 
     } catch (Exception e) {
-      log(e.getMessage());
+      log.error(e.getMessage());
     }
   }
 

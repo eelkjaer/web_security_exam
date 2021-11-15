@@ -265,8 +265,7 @@ public class User implements Serializable {
         ", name='" + name + '\'' +
         ", email='" + email + '\'' +
         ", role=" + role +
-        ", password='" + password + '\'' +
-        ", totp='" + totp + '\'' +
+        ", totp='" + isTOTP() + '\'' +
         ", lastLogin='" + lastLogin + '\'' +
         '}';
   }

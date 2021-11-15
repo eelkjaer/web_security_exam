@@ -38,6 +38,7 @@ public class LoginTOTP extends BaseServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
     if (req.getSession().getAttribute("user") != null){
       redirect(req, resp, "UserPage");
+      return;
     }
     render(req, resp);
 
@@ -65,6 +66,7 @@ public class LoginTOTP extends BaseServlet {
       }
 
     } catch (LoginError i) {
+      log.error(i.getMessage());
       request.setAttribute("errorMsg", i.getMessage());
       request.setAttribute("error", true);
       render(request, response);

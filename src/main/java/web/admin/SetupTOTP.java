@@ -40,10 +40,10 @@ public class SetupTOTP extends BaseServlet {
     try {
       User curUser = (User) req.getSession().getAttribute("user");
 
-      log("Trying to log into admin :" + curUser);
+      log.info("Trying to log into admin: {}", curUser);
 
       if (curUser == null || !curUser.isAdmin()) {
-        log("User is not admin: " + curUser);
+        log.info("User is not admin: {}", curUser);
         resp.sendError(401);
       } else {
         String totpSecret = api.generateTOTPSecret();
@@ -57,7 +57,7 @@ public class SetupTOTP extends BaseServlet {
       }
 
     } catch (Exception e) {
-      log(e.getMessage());
+      log.error(e.getMessage());
     }
   }
 
@@ -65,7 +65,9 @@ public class SetupTOTP extends BaseServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp){
     try {
       if (req.getSession().getAttribute("user") == null){
+        log.warn("No user in session");
         redirect(req, resp, "Login");
+        return;
       }
 
       User curUser = (User) req.getSession().getAttribute("user");
@@ -87,7 +89,7 @@ public class SetupTOTP extends BaseServlet {
         req.setAttribute("error", true);
         render(req, resp);
       } catch (Exception e){
-      log(e.getMessage());
+      log.error(e.getMessage());
     }
   }
 }

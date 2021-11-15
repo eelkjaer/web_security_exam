@@ -8,18 +8,22 @@
 package web.employee;
 
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 import domain.user.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
 import web.BaseServlet;
 
 @WebServlet(
     name = "UserPage",
     urlPatterns = {"/UserPage"})
 public class UserPage extends BaseServlet {
+  private static final Logger log = getLogger(UserPage.class);
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -27,21 +31,18 @@ public class UserPage extends BaseServlet {
 
     try {
       User curUser = (User) req.getSession().getAttribute("user");
-
-      log("Trying to log into admin :" + curUser);
-
       if (curUser == null) {
-        log("User is not logged in");
+        log.info("User is not logged in");
         resp.sendError(401);
       } else {
         req.setAttribute("currentUser", curUser);
 
-        log("User is logged in: " + curUser);
+        log.info("User is logged in: {}", curUser);
         render("UserPage", "/WEB-INF/pages/user/user.jsp", req, resp);
       }
 
     } catch (Exception e) {
-      log(e.getMessage());
+      log.error(e.getMessage());
     }
   }
 }

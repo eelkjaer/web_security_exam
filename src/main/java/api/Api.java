@@ -26,12 +26,11 @@ public class Api {
   private static final String DEPLOYED = System.getenv("DEPLOYED");
   private static final String DEPLOYED_DOMAIN = System.getenv("DOMAIN");
   public static final String PASSWORD_PEPPER = System.getenv("PEPPER");
-  public static final int MAX_ADMIN_SESSION_TIME = 5; //5 minutter
+  public static final int MAX_ADMIN_SESSION_TIME = 5; //minutes
   public static final String GENERIC_SITE_TITLE = "HaxB00k";
   public static final String RECAPTCHA_SITEKEY = DEPLOYED != null ? System.getenv("RECAPTCHA_SITEKEY") : "6Lc1gLYcAAAAACVdy0pgs-cY-lATaydHiyOViS2z";
-  private static final String RECAPTCHA_SECRET = DEPLOYED != null ? System.getenv("RECAPTCHA_SECRET") : "6Lc1gLYcAAAAAD0d7E5MLfaPXB7GzyqROkqkRMaH";
+  protected static final String RECAPTCHA_SECRET = DEPLOYED != null ? System.getenv("RECAPTCHA_SECRET") : "6Lc1gLYcAAAAAD0d7E5MLfaPXB7GzyqROkqkRMaH";
   public static final String DOMAIN = DEPLOYED != null ? DEPLOYED_DOMAIN : "localhost:8080";
-  public static final int MAX_LOGIN_ATTEMPTS = 5;
 
   private static final Logger log = getLogger(Api.class);
 
@@ -47,43 +46,36 @@ public class Api {
 
 
   public boolean verifyRecaptcha(String gRecaptchaResponse) {
-    return !Utils.verifyRecaptcha(gRecaptchaResponse, RECAPTCHA_SECRET);
+    log.info("Verifying recatpcha response: {}", gRecaptchaResponse);
+    return !Utils.verifyRecaptcha(gRecaptchaResponse);
   }
 
   public String generateTOTPSecret(){
+    log.info("Generating TOTP secret");
     return tfaService.generateSecretKey();
   }
 
   public boolean checkTOTP(String secret, String providedCode){
+    log.info("Comparing TOTP secrets: {} with {}", secret, providedCode);
     return tfaService.getTOTPCode(secret).equals(providedCode);
   }
 
   public String getQRCode(User currentUser){
+    log.info("Generating TOTP QR code for user {}", currentUser.getId());
     String toReturn = "";
     try{
       toReturn = tfaService.createQRCode(
           tfaService.getGABarCode(currentUser.getTotp(), currentUser.getEmail())
       );
-
     } catch (IOException | WriterException e) {
-      e.printStackTrace();
+      log.error("Exception generating TOTP QR: {}", e.getMessage());
     }
-
     return toReturn;
   }
 
-  /**
-   * @param name Users name
-   * @param email Users email
-   * @param password Users password (plain-text)
-   * @param role Users role
-   * @see User.Role
-   * @return Complete User object with ID and UUID set.
-   * @throws UserNotFound If user already exists in database
-   */
   public User createUser(String name, String email, String password, User.Role role)
       throws UserException {
-    log.info("Trying to create user: \nUser Type: {}\nName: {}\nE-mail: {}\nPassword: {}", role, name, email, password);
+    log.info("Trying to create user: \nUser Type: {}\nName: {}\nE-mail: {}", role, name, email);
 
     User user = new User(-1, name, email, role, null, User.calculateSecret(password), null);
     user = userRepository.createUser(user);
@@ -93,22 +85,12 @@ public class Api {
     return user;
   }
 
-  /**
-   * @param id ID of user in database
-   * @throws UserNotFound If user is not found in database
-   */
   public void deleteUser(int id) throws UserNotFound {
     log.info("Trying to delete user with ID {}", id);
     userRepository.deleteUserById(id);
     log.info("User deleted with ID {}", id);
   }
 
-  /**
-   * @param email Email of user
-   * @param password Password of user
-   * @return User object if correct, otherwise nulled user object
-   * @throws LoginError If password does not match
-   */
   public User login(String email, String password) throws LoginError {
     User user = null;
     try {
@@ -133,9 +115,9 @@ public class Api {
     }
   }
 
-  /** @return A list of all users in database */
   public List<User> getUsers() {
     try {
+      log.info("Getting all users");
       return userRepository.getAllUsersFromDB();
     } catch (UserNotFound | LoginError e) {
       log.warn(e.getMessage());
@@ -145,6 +127,7 @@ public class Api {
 
   public void saveTotp(User curUser) {
     try{
+      log.info("Saving TOTP secret for user {}", curUser.getId());
       userRepository.saveTOTP(curUser.getId(), curUser.getTotp());
     } catch (UserNotFound e){
       log.warn(e.getMessage());
@@ -153,8 +136,10 @@ public class Api {
 
   public void saveToLog(User curUser, String ipAddr){
     if(curUser == null){
+      log.warn("Unknown trying to access from {}", ipAddr);
       userRepository.saveToLog(-1, ipAddr);
     } else {
+      log.info("User {} trying to access from {}", curUser.getId(), ipAddr);
       userRepository.saveToLog(curUser.getId(), ipAddr);
     }
   }
