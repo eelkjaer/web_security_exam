@@ -53,17 +53,20 @@ public class Login extends BaseServlet {
       throws IOException {
     String ipAddr = api.getUserIp(request);
 
+    String triedEmail = "";
+
     try {
       if(api.verifyRecaptcha(request.getParameter("g-recaptcha-response"))){
         throw new RecaptchaException();
       }
 
       request.setAttribute("providedMail", request.getParameter("inputEmail"));
+      triedEmail = request.getParameter("inputEmail");
       User curUser = login(request);
 
 
       if (curUser != null){
-        api.saveToLog(curUser, ipAddr);
+        api.saveToLog(triedEmail, ipAddr);
 
         if (curUser.isAdmin()) {
           log.info("User {} is admin", curUser.getEmail());
@@ -85,7 +88,7 @@ public class Login extends BaseServlet {
 
     } catch (LoginError i) {
       log.error(i.getMessage());
-      api.saveToLog(null, ipAddr);
+      api.saveToLog(triedEmail, ipAddr);
       String errormsg = i.getMessage();
       request.setAttribute("errorMsg", errormsg);
       request.setAttribute("error", true);

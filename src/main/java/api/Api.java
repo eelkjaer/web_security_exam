@@ -136,7 +136,14 @@ public class Api {
     }
   }
 
-  public void saveToLog(User curUser, String ipAddr){
+  public void saveToLog(String email, String ipAddr){
+    User curUser = null;
+    try {
+      curUser = userRepository.getUserByEmail(email);
+    } catch (UserNotFound | UserSecurityException e) {
+      log.info("Cannot find user by email {}", email);
+    }
+
     if(curUser == null){
       log.warn("Unknown trying to access from {}", ipAddr);
       userRepository.saveToLog(-1, ipAddr);
