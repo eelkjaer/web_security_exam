@@ -52,7 +52,7 @@ public class SetupTOTP extends BaseServlet {
         req.getSession().setAttribute("user", curUser);
 
         req.setAttribute("qrCode", api.getQRCode(curUser));
-        req.setAttribute("totp", totpSecret);
+        req.setAttribute("totpSecret", totpSecret);
 
         req.getSession().setMaxInactiveInterval(Api.MAX_ADMIN_SESSION_TIME * 60);
         render(req, resp);
