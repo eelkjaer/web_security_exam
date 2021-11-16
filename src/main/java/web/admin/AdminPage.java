@@ -14,7 +14,9 @@ import domain.user.Log;
 import domain.user.User;
 import domain.user.exceptions.LoginError;
 import domain.user.exceptions.UserNotFound;
+import java.io.IOException;
 import java.util.List;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +28,14 @@ import web.BaseServlet;
     urlPatterns = {"/AdminPage"})
 public class AdminPage extends BaseServlet {
   private static final Logger log = getLogger(AdminPage.class);
+
+  protected void render(HttpServletRequest request, HttpServletResponse response) {
+    try {
+      super.render("Users", "/WEB-INF/pages/admin/admin.jsp", request, response);
+    } catch (ServletException | IOException e) {
+      log.error(e.getMessage());
+    }
+  }
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
@@ -75,7 +85,7 @@ public class AdminPage extends BaseServlet {
         String userId = request.getParameter("userid");
 
         if (api.checkTOTP(usr.getTotp(), providedCode)) {
-          deleteUser(userId);
+          api.deleteUser(Integer.parseInt(userId));
           redirect(request, response,"AdminPage");
           return;
         } else {
@@ -83,16 +93,14 @@ public class AdminPage extends BaseServlet {
         }
       }
       redirect(request, response, this.getServletName());
+    } catch (LoginError le){
+      log.error(le.getMessage());
+      request.setAttribute("errorMsg", le.getMessage());
+      request.setAttribute("error", true);
+      render(request, response);
     } catch (Exception e) {
       log.error(e.getMessage());
-    }
-  }
-
-  private void deleteUser(String userId) {
-    try {
-      api.deleteUser(Integer.parseInt(userId));
-    } catch (UserNotFound e) {
-      log.error(e.getMessage());
+      redirect(request, response, "AdminPage");
     }
   }
 }
