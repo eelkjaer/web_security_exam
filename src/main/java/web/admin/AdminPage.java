@@ -66,7 +66,6 @@ public class AdminPage extends BaseServlet {
         req.setAttribute("users", users);
         req.setAttribute("loginLog", logs);
         log.info("User {} is admin", curUser.getId());
-        redirect(req, resp, "AdminPage");
         render("Users", "/WEB-INF/pages/admin/admin.jsp", req, resp);
       }
 
