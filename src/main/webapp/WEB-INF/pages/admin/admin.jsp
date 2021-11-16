@@ -61,7 +61,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <table id="modaltable" name="modaltable" class="table table-striped table-bordered" style="width:100%">
+                <table id="modaltable${user.id}" name="modaltable" class="table table-striped table-bordered">
                     <thead>
                         <th>Timestamp</th>
                         <th>IP</th>
@@ -118,4 +118,26 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" class="init">
+      $(document).ready(function () {
+        $('#modaltable${user.id}').DataTable({
+          "columnDefs": [{
+            "targets": 'no-sort',
+            "orderable": false,
+            "pageLength": 5
+          }]
+        });
+      });
+    </script>
 </c:forEach>
+
+<script type="text/javascript" class="init">
+  $(document).ready(function () {
+    $('#example').DataTable({
+      "columnDefs": [{
+        "targets": 'no-sort',
+        "orderable": false,
+      }]
+    });
+  });
+</script>
