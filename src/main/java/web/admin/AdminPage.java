@@ -11,7 +11,6 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 import api.Api;
 import domain.user.User;
-import domain.user.exceptions.UserNotFound;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -65,18 +64,11 @@ public class AdminPage extends BaseServlet {
     try {
       String action = req.getParameter("action");
       if ("deleteUser".equals(action)) {
-        deleteUser(req);
+        req.setAttribute("userToDel", req.getParameter("userid"));
+        redirect(req, resp, "InputTOTP");
       }
       redirect(req, resp, this.getServletName());
     } catch (Exception e) {
-      log.error(e.getMessage());
-    }
-  }
-
-  private void deleteUser(HttpServletRequest req) {
-    try {
-      api.deleteUser(Integer.parseInt(req.getParameter("userid")));
-    } catch (UserNotFound e) {
       log.error(e.getMessage());
     }
   }
