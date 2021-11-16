@@ -51,7 +51,7 @@ public class Login extends BaseServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    String ipAddr = request.getHeader("X-FORWARDED-FOR").split(",")[0];
+    String ipAddr = api.getUserIp(request);
 
     try {
       if(api.verifyRecaptcha(request.getParameter("g-recaptcha-response"))){

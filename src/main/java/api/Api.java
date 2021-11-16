@@ -19,6 +19,7 @@ import domain.user.exceptions.UserSecurityException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 
 public class Api {
@@ -142,5 +143,16 @@ public class Api {
       log.info("User {} trying to access from {}", curUser.getId(), ipAddr);
       userRepository.saveToLog(curUser.getId(), ipAddr);
     }
+  }
+
+  public String getUserIp(HttpServletRequest request) {
+    String ipAddr = "";
+    if(request.getHeader("X-FORWARDED-FOR") != null){
+      ipAddr = request.getHeader("X-FORWARDED-FOR").split(",")[0];
+    } else {
+      ipAddr = request.getRemoteAddr();
+    }
+
+    return ipAddr;
   }
 }
