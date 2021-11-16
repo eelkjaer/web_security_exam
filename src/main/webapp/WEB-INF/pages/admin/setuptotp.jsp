@@ -27,6 +27,7 @@
     <button class="btn btn-lg btn-primary btn-block" type="submit">
         Verificer
     </button>
+    <input type="hidden" name="totpSecret" id="totpSecret" value="${totp}"/>
 </form>
 
 <div>

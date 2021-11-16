@@ -74,7 +74,8 @@ public class SetupTOTP extends BaseServlet {
       User curUser = (User) req.getSession().getAttribute("user");
 
       String totpCode = req.getParameter("inputTOTP");
-      String totpSecret = (String) req.getAttribute("totp");
+      String totpSecret = req.getParameter("totpSecret");
+      //String totpSecret = (String) req.getAttribute("totp");
 
       if (api.checkTOTP(totpSecret, totpCode)) {
         log.debug("Secret: {}", totpSecret);
