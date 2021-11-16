@@ -114,7 +114,7 @@ public class DBUser implements UserRepository {
         ps.setString(2, user.getEmail());
         ps.setString(3, user.getRole().name());
         ps.setString(4, user.getPassword());
-        ps.setString(5, "");
+        ps.setString(5, null);
         ps.executeUpdate();
 
         rs = ps.getGeneratedKeys();

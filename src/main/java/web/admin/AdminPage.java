@@ -38,7 +38,7 @@ public class AdminPage extends BaseServlet {
 
       if(!curUser.isTOTP()) {
         log.info("Admin user dont have TOTP setup: {}", curUser.getId());
-        resp.sendRedirect(req.getContextPath() + "/SetupTOTP");
+        redirect(req, resp,"SetupTOTP");
         return;
       }
 

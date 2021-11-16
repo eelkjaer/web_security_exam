@@ -47,10 +47,11 @@ public class SetupTOTP extends BaseServlet {
         resp.sendError(401);
       } else {
         String totpSecret = api.generateTOTPSecret();
-        curUser.setTotp(totpSecret);
+        //curUser.setTotp(totpSecret);
         req.getSession().setAttribute("user", curUser);
 
         req.setAttribute("qrCode", api.getQRCode(curUser));
+        req.setAttribute("totp", totpSecret);
 
         req.getSession().setMaxInactiveInterval(Api.MAX_ADMIN_SESSION_TIME * 60);
         render(req, resp);
@@ -74,9 +75,12 @@ public class SetupTOTP extends BaseServlet {
 
       String totpCode = req.getParameter("inputTOTP");
 
-      if (api.checkTOTP(curUser.getTotp(), totpCode)) {
-        log.debug("Secret: {}", curUser.getTotp());
+      String totpSecret = req.getParameter("totp");
+
+      if (api.checkTOTP(totpSecret, totpCode)) {
+        log.debug("Secret: {}", totpSecret);
         log.debug("Provided: {}", totpCode);
+        curUser.setTotp(totpSecret);
         req.getSession().setAttribute("user", curUser);
         api.saveTotp(curUser);
         resp.sendRedirect(req.getContextPath() + "/AdminPage");
