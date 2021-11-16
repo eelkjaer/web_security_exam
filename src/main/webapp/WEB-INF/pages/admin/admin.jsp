@@ -50,7 +50,6 @@
     </c:forEach>
 </table>
 
-<!-- FOR ACCESS LOG -->
 
 <c:forEach items="${requestScope.users}" var="user" varStatus="vs">
     <!-- FOR ACCESS LOG -->
@@ -98,7 +97,7 @@
     <div class="modal fade" id="delModal${user.id}" data-backdrop="true" data-keyboard="true">
         <div class="modal-dialog  modal-dialog-centered">
             <div class="modal-content">
-                <form class="form-signin" action="LoginTOTP" method="POST" >
+                <form class="form-signin" action="AdminPage" method="POST" >
                 <div class="modal-header">
                     <h4 class="modal-title">Confirm deleting ${user.email}</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
