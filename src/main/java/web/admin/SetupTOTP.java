@@ -47,6 +47,7 @@ public class SetupTOTP extends BaseServlet {
         resp.sendError(401);
       } else {
         String totpSecret = api.generateTOTPSecret();
+        log.info("TOTP SECRET: {}", totpSecret);
         //curUser.setTotp(totpSecret);
         req.getSession().setAttribute("user", curUser);
 
