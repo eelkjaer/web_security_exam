@@ -9,7 +9,6 @@ package domain.user;
 
 import api.Api;
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.mindrot.jbcrypt.BCrypt;
@@ -45,7 +44,7 @@ public class User implements Serializable {
   }
 
   public boolean isTOTP(){
-    return !this.totp.isEmpty() || !this.totp.isBlank() || !Objects.equals(this.totp, "NOS");
+    return !this.totp.isEmpty() || !this.totp.isBlank() || this.totp != null;
   }
 
   public static String calculateSecret(String password) {
@@ -266,7 +265,7 @@ public class User implements Serializable {
         ", name='" + name + '\'' +
         ", email='" + email + '\'' +
         ", role=" + role +
-        ", totp='" + isTOTP() + '\'' +
+        ", totp='" + totp + '\'' +
         ", lastLogin='" + lastLogin + '\'' +
         '}';
   }
