@@ -10,6 +10,7 @@ package api;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import com.google.zxing.WriterException;
+import domain.user.Log;
 import domain.user.User;
 import domain.user.UserRepository;
 import domain.user.exceptions.LoginError;
@@ -154,5 +155,10 @@ public class Api {
     }
 
     return ipAddr;
+  }
+
+  public List<Log> getAllLoginAttempts(){
+    log.info("Getting all login attempts");
+    return userRepository.getLogs();
   }
 }

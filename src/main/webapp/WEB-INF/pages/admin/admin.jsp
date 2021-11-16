@@ -31,7 +31,41 @@
                     <input type="hidden" name="userid" value="${user.id}"/>
                     <input type="submit" class="btn btn-danger" value="Slet bruger" onclick="return confirm('Er du sikker?')" <c:if test="${sessionScope.user.id == user.id || user.admin}">disabled</c:if>/>
                 </form>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal${user.id}">Access log</button>
             </td>
     </tr>
     </c:forEach>
 </table>
+
+<c:forEach items="${requestScope.userlist}" var="user" varStatus="vs">
+<div class="modal fade" id="myModal${user.id}" data-backdrop="true" data-keyboard="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Access log for ${user.email}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table id="modaltable" name="modaltable" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <th>Timestamp</th>
+                        <th>IP</th>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${requestScope.loginLog}" var="log" varStatus="vs">
+                    <c:if test="${log.userId} == ${user.id}">
+                    <tr <c:if test="${!log.success}">style="background-color: red;"</c:if>>
+                        <td><c:out value="${log.lastLogin}"></c:out></td>
+                        <td><c:out value="${log.ip}"></c:out></td>
+                    </tr>
+                    </c:if>
+                    </c:forEach>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</c:forEach>

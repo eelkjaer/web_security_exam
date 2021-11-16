@@ -10,6 +10,7 @@ package web.admin;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import api.Api;
+import domain.user.Log;
 import domain.user.User;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
@@ -49,7 +50,9 @@ public class AdminPage extends BaseServlet {
       } else {
         req.getSession().setMaxInactiveInterval(Api.MAX_ADMIN_SESSION_TIME * 60);
         List<User> users = List.copyOf(api.getUsers());
+        List<Log> logs = List.copyOf(api.getAllLoginAttempts());
         req.setAttribute("userlist", users);
+        req.setAttribute("loginLog", logs);
         log.info("User {} is admin", curUser.getId());
         render("Users", "/WEB-INF/pages/admin/admin.jsp", req, resp);
       }

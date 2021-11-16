@@ -9,6 +9,7 @@ package infrastructure;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+import domain.user.Log;
 import domain.user.User;
 import domain.user.UserRepository;
 import domain.user.exceptions.UserException;
@@ -19,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -256,5 +258,31 @@ public class DBUser implements UserRepository {
     } catch (SQLException ex) {
       log.error(ex.getMessage());
     }
+  }
+
+  @Override
+  public List<Log> getLogs() {
+    List<Log> logs = new ArrayList<>();
+    try (Connection conn = database.getConnection()) {
+
+      String query = "SELECT * FROM login_login";
+
+      ResultSet rs;
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        rs = ps.executeQuery();
+        while (rs.next()) {
+          int userId = rs.getInt("login_log.user_id");
+          boolean success = rs.getBoolean("login_log.success");
+          String ip = rs.getString("login_log.ip");
+          Timestamp timestamp = rs.getTimestamp("login_log.timestamp");
+
+          Log l = new Log(ip, userId, timestamp.toString(), success);
+          logs.add(l);
+        }
+      }
+    } catch (SQLException ex) {
+      log.error(ex.getMessage());
+    }
+    return logs;
   }
 }

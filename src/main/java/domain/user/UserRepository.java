@@ -31,4 +31,6 @@ public interface UserRepository extends UserFactory {
   void saveTOTP(int userId, String totpSecret) throws UserNotFound;
 
   void saveToLog(int userId, String ip);
+
+  List<Log> getLogs();
 }
