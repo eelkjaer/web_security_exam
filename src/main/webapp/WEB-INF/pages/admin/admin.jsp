@@ -52,7 +52,7 @@
                         <th>IP</th>
                     </thead>
                     <tbody>
-                    <c:forEach items="${requestScope.loginLog}" var="log" varStatus="vs">
+                    <c:forEach items="${requestScope.loginLog}" var="log" varStatus="vss">
                     <c:if test="${log.userId} == ${user.id}">
                     <tr <c:if test="${!log.success}">style="background-color: red;"</c:if>>
                         <td><c:out value="${log.lastLogin}"></c:out></td>

@@ -53,6 +53,7 @@ public class AdminPage extends BaseServlet {
         List<Log> logs = List.copyOf(api.getAllLoginAttempts());
         req.setAttribute("userlist", users);
         req.setAttribute("loginLog", logs);
+        log.info("loginLog: {}", logs);
         log.info("User {} is admin", curUser.getId());
         render("Users", "/WEB-INF/pages/admin/admin.jsp", req, resp);
       }
