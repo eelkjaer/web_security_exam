@@ -48,7 +48,6 @@ public class BaseServlet extends HttpServlet {
   protected void render(
       String title, String content, HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-
     request.setCharacterEncoding(ENCODING);
     response.setCharacterEncoding(ENCODING);
 
@@ -60,7 +59,7 @@ public class BaseServlet extends HttpServlet {
     request.setAttribute("recaptchaKey", Api.RECAPTCHA_SITEKEY);
 
     String ipAddr = api.getUserIp(request);
-    log.info("{} requesting {} ({})", ipAddr, title, content);
+    log.info("{} requesting {}({})", ipAddr, title, content);
     //log.info("HTTP headers: {}", getAllHeaders(request));
 
     request.getRequestDispatcher("/WEB-INF/includes/base.jsp").forward(request, response);

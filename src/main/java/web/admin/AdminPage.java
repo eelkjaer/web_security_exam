@@ -42,8 +42,6 @@ public class AdminPage extends BaseServlet {
         return;
       }
 
-      req.setAttribute("qrCode", api.getQRCode(curUser));
-
       log.info("Trying to log into admin : {}", curUser.getId());
 
       if (!curUser.isAdmin()) {

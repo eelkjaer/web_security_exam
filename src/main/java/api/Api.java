@@ -61,12 +61,12 @@ public class Api {
     return tfaService.getTOTPCode(secret).equals(providedCode);
   }
 
-  public String getQRCode(User currentUser){
+  public String getQRCode(User currentUser, String totpSecret){
     log.info("Generating TOTP QR code for user {}", currentUser.getId());
     String toReturn = "";
     try{
       toReturn = tfaService.createQRCode(
-          tfaService.getGABarCode(currentUser.getTotp(), currentUser.getEmail())
+          tfaService.getGABarCode(totpSecret, currentUser.getEmail())
       );
     } catch (IOException | WriterException e) {
       log.error("Exception generating TOTP QR: {}", e.getMessage());
