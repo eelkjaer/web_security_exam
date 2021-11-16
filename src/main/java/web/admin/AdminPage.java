@@ -97,7 +97,7 @@ public class AdminPage extends BaseServlet {
       log.error(le.getMessage());
       request.setAttribute("errorMsg", le.getMessage());
       request.setAttribute("error", true);
-      redirect(request, response, "AdminPage");
+      doGet(request, response);
       //render(request, response);
     } catch (Exception e) {
       log.error(e.getMessage());
