@@ -44,7 +44,10 @@ public class User implements Serializable {
   }
 
   public boolean isTOTP(){
-    return !this.totp.isEmpty() || !this.totp.isBlank() || this.totp != null;
+    if(this.totp != null){
+      return !this.totp.isEmpty() || !this.totp.isBlank();
+    }
+  return false;
   }
 
   public static String calculateSecret(String password) {
