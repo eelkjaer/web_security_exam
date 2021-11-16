@@ -72,10 +72,12 @@ public class AdminPage extends BaseServlet {
       if("totp".equals(target) && "deleteUser".equals(action)) {
         User usr = (User) request.getSession().getAttribute("user");
         String providedCode = request.getParameter("inputTOTP");
+        String userId = request.getParameter("userid");
 
         if (api.checkTOTP(usr.getTotp(), providedCode)) {
-          deleteUser(request);
-          response.sendRedirect(request.getContextPath() + "/AdminPage");
+          deleteUser(userId);
+          redirect(request, response,"AdminPage");
+          return;
         } else {
           throw new LoginError("Wrong auth code. Please try again");
         }
@@ -86,9 +88,9 @@ public class AdminPage extends BaseServlet {
     }
   }
 
-  private void deleteUser(HttpServletRequest req) {
+  private void deleteUser(String userId) {
     try {
-      api.deleteUser(Integer.parseInt(req.getParameter("userid")));
+      api.deleteUser(Integer.parseInt(userId));
     } catch (UserNotFound e) {
       log.error(e.getMessage());
     }

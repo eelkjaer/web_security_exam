@@ -28,7 +28,6 @@ public class Index extends BaseServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     if (req.getSession().getAttribute("user") != null){
-      log.info("No user in session");
       redirect(req, resp, "UserPage");
       return;
     }
