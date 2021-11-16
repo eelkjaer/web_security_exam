@@ -136,7 +136,7 @@ public class Api {
     }
   }
 
-  public void saveToLog(String email, String ipAddr){
+  public void saveToLog(String email, String ipAddr, boolean success){
     User curUser = null;
     try {
       curUser = userRepository.getUserByEmail(email);
@@ -146,10 +146,10 @@ public class Api {
 
     if(curUser == null){
       log.warn("Unknown trying to access from {}", ipAddr);
-      userRepository.saveToLog(-1, ipAddr);
+      userRepository.saveToLog(-1, ipAddr, false);
     } else {
       log.info("User {} trying to access from {}", curUser.getId(), ipAddr);
-      userRepository.saveToLog(curUser.getId(), ipAddr);
+      userRepository.saveToLog(curUser.getId(), ipAddr, success);
     }
   }
 

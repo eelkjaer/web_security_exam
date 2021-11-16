@@ -50,6 +50,7 @@
                     <thead>
                         <th>Timestamp</th>
                         <th>IP</th>
+                        <th>Success</th>
                     </thead>
                     <tbody>
                     <c:forEach items="${requestScope.loginLog}" var="log" varStatus="vss">
@@ -57,6 +58,7 @@
                     <tr <c:if test="${!log.success}">style="background-color: red;"</c:if>>
                         <td><c:out value="${log.lastLogin}"></c:out></td>
                         <td><c:out value="${log.ip}"></c:out></td>
+                        <td><c:out value="${log.success}"></c:out></td>
                     </tr>
                     </c:if>
                     </c:forEach>

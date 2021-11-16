@@ -245,12 +245,12 @@ public class DBUser implements UserRepository {
   }
 
   @Override
-  public void saveToLog(int userId, String ip) {
+  public void saveToLog(int userId, String ip, boolean success) {
     try (Connection conn = database.getConnection()) {
       String query = "INSERT INTO login_log (user_id, success, ip, timestamp) VALUES (?, ?, ?, NOW())";
       try (PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
         ps.setInt(1, userId);
-        ps.setBoolean(2, userId != -1);
+        ps.setBoolean(2, success);
         ps.setString(3, ip);
 
         ps.executeUpdate();

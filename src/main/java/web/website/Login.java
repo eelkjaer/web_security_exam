@@ -66,7 +66,7 @@ public class Login extends BaseServlet {
 
 
       if (curUser != null){
-        api.saveToLog(triedEmail, ipAddr);
+        api.saveToLog(triedEmail, ipAddr, true);
 
         if (curUser.isAdmin()) {
           log.info("User {} is admin", curUser.getEmail());
@@ -88,7 +88,7 @@ public class Login extends BaseServlet {
 
     } catch (LoginError i) {
       log.error(i.getMessage());
-      api.saveToLog(triedEmail, ipAddr);
+      api.saveToLog(triedEmail, ipAddr, false);
       String errormsg = i.getMessage();
       request.setAttribute("errorMsg", errormsg);
       request.setAttribute("error", true);
