@@ -39,7 +39,6 @@ public class AdminPage extends BaseServlet {
       if(!curUser.isTOTP()) {
         log.info("Admin user dont have TOTP setup: {}", curUser.getId());
         resp.sendRedirect(req.getContextPath() + "/SetupTOTP");
-        return;
       }
 
       req.setAttribute("qrCode", api.getQRCode(curUser));
