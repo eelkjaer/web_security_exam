@@ -265,7 +265,7 @@ public class DBUser implements UserRepository {
     List<Log> logs = new ArrayList<>();
     try (Connection conn = database.getConnection()) {
 
-      String query = "SELECT * FROM login_login";
+      String query = "SELECT * FROM login_log";
 
       ResultSet rs;
       try (PreparedStatement ps = conn.prepareStatement(query)) {
