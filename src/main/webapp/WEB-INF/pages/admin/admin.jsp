@@ -29,9 +29,10 @@
                 <form action="AdminPage" method="post">
                     <input type="hidden" name="action" value="deleteUser"/>
                     <input type="hidden" name="userid" value="${user.id}"/>
-                    <input type="submit" class="btn btn-danger" value="Slet bruger" onclick="return confirm('Er du sikker?')" <c:if test="${sessionScope.user.id == user.id || user.admin}">disabled</c:if>/>
+                    <input type="submit" class="btn btn-danger" style="width:100%;" value="Slet bruger" onclick="return confirm('Er du sikker?')" <c:if test="${sessionScope.user.id == user.id || user.admin}">disabled</c:if>/>
                 </form>
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal${user.id}">Access log</button>
+                <br>
+                <button type="button" class="btn btn-warning" style="width:100%;" data-toggle="modal" data-target="#myModal${user.id}">Access log</button>
             </td>
     </tr>
     </c:forEach>
@@ -58,7 +59,14 @@
                     <tr <c:if test="${!log.success}">style="background-color: red;"</c:if>>
                         <td><c:out value="${log.lastLogin}"></c:out></td>
                         <td><c:out value="${log.ip}"></c:out></td>
-                        <td><c:out value="${log.success}"></c:out></td>
+                        <td><c:choose>
+                            <c:when test="${log.success}">
+                                &#9989;
+                            </c:when>
+                            <c:otherwise>
+                                &#10060;
+                            </c:otherwise>
+                        </c:choose></td>
                     </tr>
                     </c:if>
                     </c:forEach>

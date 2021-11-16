@@ -42,7 +42,6 @@ public class InputTOTP extends BaseServlet {
       return;
     }
     render(req, resp);
-
   }
 
   @Override

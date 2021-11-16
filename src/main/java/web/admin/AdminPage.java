@@ -69,6 +69,7 @@ public class AdminPage extends BaseServlet {
       if ("deleteUser".equals(action)) {
         req.setAttribute("userToDel", req.getParameter("userid"));
         redirect(req, resp, "InputTOTP");
+        return;
       }
       redirect(req, resp, this.getServletName());
     } catch (Exception e) {
