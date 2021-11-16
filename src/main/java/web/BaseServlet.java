@@ -59,7 +59,12 @@ public class BaseServlet extends HttpServlet {
     request.setAttribute("navbar", new Navbar(request));
     request.setAttribute("recaptchaKey", Api.RECAPTCHA_SITEKEY);
 
-    String ipAddr = request.getHeader("X-FORWARDED-FOR").split(",")[0];
+    String ipAddr = "";
+    if(request.getHeader("X-FORWARDED-FOR").contains(",")){
+      ipAddr = request.getHeader("X-FORWARDED-FOR").split(",")[0];
+    } else {
+      ipAddr = request.getRemoteAddr();
+    }
     log.info("{} requesting {} ({})", ipAddr, title, content);
     //log.info("HTTP headers: {}", getAllHeaders(request));
 
