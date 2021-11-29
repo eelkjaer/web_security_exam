@@ -1,7 +1,7 @@
 <h1 align="center">Welcome to Web Security Exam 2021 👮‍♀️</h1>
 
 <h3>Our take on a web application with secure login 🗝</h3>
-<a href="https://virkeligsikker.dk">Demo site</a>
+<a href="https://virkeligsikker.dk">Demo site</a><br>
 <a href="rapport.pdf">Report</a>
 <p>By using our skills in Java programming and newly taught skills in IT Security, we
 did our best to make a super secure login system on a Java based web application.</p>
